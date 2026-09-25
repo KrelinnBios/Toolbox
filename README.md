@@ -34,7 +34,7 @@ Toolbox 是一个以静态网页形式呈现的在线工具与资源导航，按
 ## 界面预览
 
 <p align="center">
-  <img src="screenshots/PixPin_2026-09-26_00-55-44.png" width="85%" alt="Toolbox 界面预览">
+  <img src="screenshots/PixPin_2026-09-26_01-13-30.png" width="85%" alt="Toolbox 界面预览">
 </p>
 
 ## 使用方式
