@@ -118,6 +118,7 @@ const siteCategories = [
     items: [
       { name: "Dynadot", url: "https://www.dynadot.com/zh", desc: "域名注册、网站服务与网络资源管理。", group: "域名与邮箱" },
       { name: "Proton Mail", url: "https://proton.me/mail", desc: "Proton 加密邮箱服务。", group: "域名与邮箱" },
+      { name: "Dodo Payments", url: "https://app.dodopayments.com/", desc: "数字产品支付处理与订阅管理平台。", group: "支付服务" },
       { name: "WildAI", url: "https://bewild.ai/?code=JDYR4ATU", desc: "ChatGPT、Claude 与 X 等服务的订阅代购。", group: "AI 订阅" },
       { name: "DaseinAI", url: "https://www.daseinai.xyz/register?aff=VWHM8SMXYMLH", desc: "AI 模型 API 接入与中转服务。", group: "AI 订阅" },
       { name: "ProAIAPI", url: "https://proaiapi.vip/register?aff=WsJ0", desc: "AI 模型 API 接入与中转服务。", group: "AI 订阅" },
