@@ -9,11 +9,6 @@ const toolsTotal = document.querySelector("#tools-total");
 let searchQuery = "";
 let scrollSpyLock = false;
 let scrollSpyFrame = 0;
-const siteNameCollator = new Intl.Collator("zh-u-co-pinyin", {
-  numeric: true,
-  sensitivity: "base",
-});
-
 function escapeHtml(value) {
   const element = document.createElement("span");
   element.textContent = value;
@@ -36,6 +31,12 @@ function matchesQuery(item, category, query) {
 
 function groupedItems(category) {
   const groups = new Map();
+  const groupOrder = new Map();
+  category.items.forEach((item, index) => {
+    const group = item.group || "其他";
+    if (!groupOrder.has(group)) groupOrder.set(group, index);
+  });
+
   category.items
     .filter((item) => matchesQuery(item, category, searchQuery))
     .forEach((item) => {
@@ -44,12 +45,9 @@ function groupedItems(category) {
       groups.get(group).push(item);
     });
 
-  return [...groups.entries()]
-    .sort(([groupA], [groupB]) => siteNameCollator.compare(groupA, groupB))
-    .map(([group, items]) => [
-      group,
-      items.sort((itemA, itemB) => siteNameCollator.compare(itemA.name, itemB.name)),
-    ]);
+  return [...groups.entries()].sort(
+    ([groupA], [groupB]) => groupOrder.get(groupA) - groupOrder.get(groupB),
+  );
 }
 
 function renderTabs() {

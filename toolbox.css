@@ -61,7 +61,11 @@ body {
   min-height: 100vh;
   margin: 0;
   color: var(--ink);
-  background: var(--paper);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(21, 19, 41, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 19, 41, 0.09) 1px, transparent 1px);
+  background-size: 24px 24px;
   font-family: "Courier Prime", "Noto Sans SC", "Microsoft YaHei", monospace;
 }
 
@@ -88,7 +92,11 @@ svg { display: block; }
   display: flex;
   align-items: stretch;
   width: 100%;
-  background: var(--paper);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(21, 19, 41, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 19, 41, 0.09) 1px, transparent 1px);
+  background-size: 24px 24px;
   margin: 0 auto;
 }
 .tools-sidebar {
@@ -103,10 +111,16 @@ svg { display: block; }
   width: 280px;
   height: 100vh;
   padding: 30px 18px 24px;
-  background: var(--sidebar);
-  overflow-y: auto;
+  background-color: var(--sidebar);
+  background-image:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.012) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.012) 75%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.012) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.012) 75%);
+  background-position: 0 0, 12px 12px;
+  background-size: 24px 24px;
+  box-shadow: inset 5px 0 0 var(--acid);
+  overflow-y: hidden;
+  overflow-x: hidden;
   border-right: 3px solid var(--ink);
-  scrollbar-color: var(--sidebar-muted) transparent;
 }
 .tools-sidebar::-webkit-scrollbar-thumb { background: var(--sidebar-muted) !important; }
 .tools-sidebar::-webkit-scrollbar-thumb:hover,
@@ -226,10 +240,10 @@ main {
   padding: 20px 16px;
   background: var(--surface);
   border: 3px solid var(--ink);
-  box-shadow: 5px 5px 0 var(--ink);
+  box-shadow: 5px 5px 0 var(--card-shadow, var(--ink));
   transition: transform 120ms steps(2, end), box-shadow 120ms steps(2, end);
 }
-.tools-card:active { background: var(--paper); box-shadow: 2px 2px 0 var(--card-shadow, var(--ink)); transform: translate(3px, 3px); }
+  .tools-card:active { background: var(--card-active, #e8e8e8); box-shadow: 2px 2px 0 var(--card-shadow, var(--ink)); transform: translate(3px, 3px); }
 .tools-card-icon {
   display: grid;
   position: relative;
@@ -318,6 +332,22 @@ main {
 .tools-section.category-accounts-and-subscriptions { --card-shadow: var(--red); }
 .tools-section.category-accounts-and-subscriptions { --card-active: #ffe1e2; }
 
+.tools-section.category-image-resources { --card-shadow: var(--ink); --card-active: #e8e8e8; }
+.tools-section.category-image-editing { --card-shadow: #8e44ad; --card-active: #f0dcfa; }
+.tools-section.category-file-tools { --card-shadow: #e67e22; --card-active: #ffead2; }
+.tools-section.category-entertainment { --card-shadow: #3498db; --card-active: #dceeff; }
+.tools-section.category-ebooks { --card-shadow: #27ae60; --card-active: #daf5e4; }
+.tools-section.category-library { --card-shadow: #e74c3c; --card-active: #ffe0dc; }
+.tools-section.category-learning { --card-shadow: #f1c40f; --card-active: #fff5c9; }
+.tools-section.category-encyclopedia { --card-shadow: #16a085; --card-active: #d6f3ed; }
+.tools-section.category-culture-science { --card-shadow: #e84393; --card-active: #ffe0f0; }
+.tools-section.category-developer { --card-shadow: #3f51b5; --card-active: #e0e5ff; }
+.tools-section.category-network-testing { --card-shadow: #00a896; --card-active: #d5f5f0; }
+.tools-section.category-community { --card-shadow: #9a5b2c; --card-active: #f9e5d4; }
+.tools-section.category-living { --card-shadow: #8abf45; --card-active: #eaf6d8; }
+.tools-section.category-accounts { --card-shadow: #9b2335; --card-active: #f9dce1; }
+.tools-section.category-subscriptions { --card-shadow: #268b91; --card-active: #daf2f2; }
+
 /* Each category keeps the same typography but uses a different browsing rhythm. */
 
 .tools-section.category-image-sources .tools-section-number,
@@ -341,6 +371,59 @@ main {
 .tools-section.category-accounts-and-subscriptions .tools-section-number,
 .tools-tab.category-accounts-and-subscriptions .tools-tab-count { color: var(--red); }
 
+/* Desktop directory keeps the original dark, block-based navigation without stretching items. */
+@media (min-width: 801px) {
+  .tools-sidebar {
+    width: 280px;
+    padding: 22px 14px 18px;
+    background-color: var(--sidebar);
+    border-right: 3px solid var(--ink);
+    box-shadow: none;
+    overflow: hidden;
+  }
+  main { margin-left: 280px; }
+  .tools-directory-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  .tools-tabs {
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: 3px;
+    padding-top: 3px;
+  }
+  .tools-tab {
+    min-height: 32px;
+    padding: 4px 8px;
+    color: #fff;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+  .tools-tab:hover {
+    color: #fff;
+    background: #292542;
+    border-color: #4c4674;
+    box-shadow: none;
+    transform: none;
+  }
+  .tools-tab.is-active {
+    color: var(--ink);
+    background: var(--acid);
+    border-color: var(--acid);
+    box-shadow: none;
+    transform: none;
+  }
+  .tools-tab-number { display: none; }
+  .tools-tab-count { color: var(--sidebar-muted); font-size: 11px; }
+  .tools-tab.is-active .tools-tab-count { color: var(--ink); }
+  .tools-sidebar-links { margin-top: auto; }
+}
+
 @media (min-width: 1500px) {
   .tools-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -363,7 +446,13 @@ main {
     margin: 0 -16px;
     padding: calc(9px + env(safe-area-inset-top, 0px)) 0 9px;
     overflow: visible;
-    background: var(--paper);
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(45deg, rgba(21, 19, 41, 0.012) 25%, transparent 25%, transparent 75%, rgba(21, 19, 41, 0.012) 75%),
+      linear-gradient(45deg, rgba(21, 19, 41, 0.012) 25%, transparent 25%, transparent 75%, rgba(21, 19, 41, 0.012) 75%);
+    background-position: 0 0, 12px 12px;
+    background-size: 24px 24px;
+    box-shadow: inset 0 -4px 0 var(--acid);
     border-right: 0;
     border-bottom: 3px solid var(--ink);
     cursor: grab;
@@ -472,6 +561,6 @@ main {
 }
 
 @media (hover: none) and (pointer: coarse) {
-   .tools-card:hover { background: var(--card-active, #fff); box-shadow: 1px 1px 0 var(--card-shadow, var(--ink)); transform: translate(3px, 3px); }
+   .tools-card:hover { background: var(--card-active, var(--surface)); box-shadow: 1px 1px 0 var(--card-shadow, var(--ink)); transform: translate(3px, 3px); }
   .tools-card:hover .tools-card-desc { color: var(--muted); }
 }
