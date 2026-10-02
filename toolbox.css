@@ -335,12 +335,14 @@ main {
 .tools-section.category-image-resources { --card-shadow: var(--ink); --card-active: #e8e8e8; }
 .tools-section.category-image-editing { --card-shadow: #8e44ad; --card-active: #f0dcfa; }
 .tools-section.category-file-tools { --card-shadow: #e67e22; --card-active: #ffead2; }
+.tools-section.category-content-creation { --card-shadow: var(--ink); --card-active: #e8e8e8; }
 .tools-section.category-entertainment { --card-shadow: #3498db; --card-active: #dceeff; }
 .tools-section.category-ebooks { --card-shadow: #27ae60; --card-active: #daf5e4; }
 .tools-section.category-library { --card-shadow: #e74c3c; --card-active: #ffe0dc; }
 .tools-section.category-learning { --card-shadow: #f1c40f; --card-active: #fff5c9; }
 .tools-section.category-encyclopedia { --card-shadow: #16a085; --card-active: #d6f3ed; }
 .tools-section.category-culture-science { --card-shadow: #e84393; --card-active: #ffe0f0; }
+.tools-section.category-resource-navigation { --card-shadow: var(--ink); --card-active: #e8e8e8; }
 .tools-section.category-developer { --card-shadow: #3f51b5; --card-active: #e0e5ff; }
 .tools-section.category-network-testing { --card-shadow: #00a896; --card-active: #d5f5f0; }
 .tools-section.category-community { --card-shadow: #9a5b2c; --card-active: #f9e5d4; }
@@ -563,4 +565,11 @@ main {
 @media (hover: none) and (pointer: coarse) {
    .tools-card:hover { background: var(--card-active, var(--surface)); box-shadow: 1px 1px 0 var(--card-shadow, var(--ink)); transform: translate(3px, 3px); }
   .tools-card:hover .tools-card-desc { color: var(--muted); }
+}
+
+.tools-card:active,
+.tools-section .tools-card:active {
+  background: var(--card-active, #d8d8d8);
+  box-shadow: 2px 2px 0 #999;
+  transform: translate(3px, 3px);
 }

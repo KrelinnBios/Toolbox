@@ -36,6 +36,7 @@ const sourceSiteCategories = [
     items: [
       { name: "转换文件工具箱", url: "https://www.aconvert.com/cn/", desc: "转换文档、电子书、图片和音视频文件格式。", group: "格式转换" },
       { name: "iLovePDF", url: "https://www.ilovepdf.com/", desc: "PDF 合并、拆分、压缩、转换与签名。", group: "格式转换" },
+      { name: "PdfZap", url: "https://pdfzap.toolooz.com/", desc: "免费在线批量压缩 PDF 文件，全程本地处理以保护隐私。", group: "格式转换" },
       { name: "FreeCompress", url: "https://freecompress.com/zh-cn", desc: "在线压缩图片、视频、音频与文档。", group: "格式转换" },
       { name: "HexEd.it", url: "https://hexed.it/", desc: "在浏览器中查看和编辑文件的十六进制数据。", group: "文件分析" },
       { name: "AB Download Manager", url: "https://abdownloadmanager.com/", desc: "开源多线程下载管理器，支持浏览器集成。", group: "下载工具" },
@@ -43,12 +44,16 @@ const sourceSiteCategories = [
       { name: "Code Beautify", url: "https://codebeautify.org/", desc: "代码格式化、压缩、转换与验证工具。", group: "开发工具" },
       { name: "Unicode 文本转换器", url: "https://qaz.wtf/u/convert.cgi?", desc: "将字母与数字转成可复制的 Unicode 花体字符。", group: "文本处理" },
       { name: "在线工具大全", url: "https://www.lddgo.net/", desc: "提供网络请求、加密解密与正则表达式等在线工具。", group: "通用工具" },
+      { name: "FunCipherBox", url: "https://funcipherbox.toolooz.com/", desc: "趣味在线加密解密工具箱，支持多种文本处理方式。", group: "文本处理" },
     ],
   },
   {
     id: "content-creation",
     label: "内容创作",
     items: [
+      { name: "Weave Silk", url: "https://weavesilk.com/", desc: "交互式丝绸绘画与视觉创作工具。", group: "绘画工具" },
+      { name: "Pixel Beads", url: "https://www.pixelbeads.io/zh-cn", desc: "在线制作像素拼豆图案的创作工具。", group: "像素创作" },
+      { name: "MakeBead", url: "https://makebead.com/zh-Hans/maker/pixel-art-editor/", desc: "在线像素画编辑器，可制作拼豆图案。", group: "像素创作" },
     ],
   },
   {
@@ -57,11 +62,15 @@ const sourceSiteCategories = [
     items: [
       { name: "爱看机器人", url: "https://www.imoviebot.com/", desc: "搜索电影、电视剧等影视资源。", group: "影视资源" },
       { name: "资源机器人", url: "https://www.ziyuan520.com/", desc: "综合资源检索机器人，可免费查找影视、游戏、软件、音乐和电子书等资源。", group: "影视资源" },
-      { name: "ZIP0", url: "https://zip0.com/", desc: "影视聚合搜索与播放，支持选集和切换线路。", group: "影视资源" },
+      { name: "ZIP0", url: "https://zip0.com/?r=PFWHX7", desc: "影视聚合搜索与播放，支持选集和切换线路。", group: "影视资源" },
       { name: "SyncTV 文档", url: "https://docs.synctv.wiki/", desc: "SyncTV 多人同步观影工具的安装、部署与使用文档。", group: "影视资源" },
       { name: "GGemu", url: "https://ggemu.com/", desc: "提供复古游戏模拟器与相关游戏资源下载。", group: "游戏资源" },
+      { name: "Steam Card Exchange", url: "https://www.steamcardexchange.net/", desc: "查询 Steam 集换式卡牌、徽章与资料背景。", group: "游戏资源" },
       { name: "Radio Garden", url: "https://radio.garden/", desc: "在地球仪上收听全球各地的电台。", group: "音乐电台" },
       { name: "Tunefind", url: "https://www.tunefind.com/", desc: "查询电影、电视剧和游戏中出现的歌曲与配乐。", group: "音乐电台" },
+      { name: "怀旧游戏博物馆", url: "https://rgm.games/", desc: "保护、展示与在线体验经典电子游戏的非营利项目。", group: "游戏资源" },
+      { name: "Fuun", url: "https://fuun.fun/", desc: "在线小游戏与互动体验平台。", group: "游戏资源" },
+      { name: "AHA Music", url: "https://aha-music.com/", desc: "识别歌曲并搜索音乐信息。", group: "音乐电台" },
     ],
   },
   {
@@ -98,6 +107,7 @@ const sourceSiteCategories = [
       { name: "Oeasy", url: "https://oeasy.net/", desc: "编程、设计与多媒体教程站。", group: "在线教程" },
       { name: "打字鸭", url: "https://daziya.com/", desc: "盲打指法、拼音与英文打字练习平台。", group: "在线教程" },
       { name: "Qwerty Learner", url: "https://qwertylearner.cn/", desc: "单词与键盘打字练习工具。", group: "在线教程" },
+      { name: "菜鸟教程", url: "https://www.runoob.com/", desc: "编程语言与开发技术学习教程。", group: "在线教程" },
     ],
   },
   {
@@ -107,7 +117,6 @@ const sourceSiteCategories = [
       { name: "灰机 wiki", url: "https://www.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5", desc: "游戏、动漫与兴趣主题的中文百科社区。", group: "综合百科" },
       { name: "Fandom", url: "https://www.fandom.com/", desc: "由爱好者共同维护的游戏与影视百科。", group: "综合百科" },
       { name: "wikiHow", url: "https://www.wikihow.com/Main-Page", desc: "图文步骤式的生活与技能操作指南。", group: "综合百科" },
-      { name: "Steam Card Exchange", url: "https://www.steamcardexchange.net/", desc: "查询 Steam 集换式卡牌、徽章与资料背景。", group: "专业资料" },
       { name: "Avibase", url: "https://avibase.bsc-eoc.org/avibase.jsp", desc: "全球鸟类物种数据库与分布信息。", group: "专业资料" },
       { name: "Funes", url: "https://funes.world/", desc: "科幻与奇幻作品信息库。", group: "专业资料" },
       { name: "MuscleWiki", url: "https://musclewiki.com/zh-cn", desc: "按肌肉部位查询健身动作与演示。", group: "专业资料" },
@@ -120,7 +129,6 @@ const sourceSiteCategories = [
     id: "culture-science",
     label: "文化科学",
     items: [
-      { name: "数字多宝阁", url: "https://www.dpm.org.cn/shuziduobaoge.html", desc: "故宫博物院藏品数字化展示。", group: "历史文化" },
       { name: "Internet Archive", url: "https://archive.org/", desc: "网页快照、书籍、影音与软件的数字档案馆。", group: "历史文化" },
       { name: "全历史", url: "https://www.allhistory.com/", desc: "以时间轴与关系图谱呈现历史事件与人物。", group: "历史文化" },
       { name: "Old Maps Online", url: "https://www.oldmapsonline.org/zh", desc: "检索与浏览全球历史地图馆藏。", group: "历史文化" },
@@ -129,6 +137,8 @@ const sourceSiteCategories = [
       { name: "Shape of World", url: "https://shapeof.world/", desc: "地理数据可视化与世界地图展示。", group: "科学工具" },
       { name: "Scale of Universe", url: "https://scaleofuniverse.com/zh", desc: "宇宙尺度可视化，从量子到星系。", group: "科学工具" },
       { name: "100,000 Stars", url: "https://stars.chromeexperiments.com/", desc: "银河系星图 3D 可视化体验。", group: "科学工具" },
+      { name: "故宫博物院院刊", url: "https://www.dpm.org.cn/yygg.html", desc: "故宫博物院学术期刊与研究资料。", group: "历史文化" },
+      { name: "数字敦煌", url: "https://www.e-dunhuang.com/index.htm", desc: "敦煌石窟与壁画的数字化展示。", group: "历史文化" },
     ],
   },
   {
@@ -142,7 +152,18 @@ const sourceSiteCategories = [
       { name: "Coolors", url: "https://coolors.co/", desc: "配色方案生成与调色板管理工具。", group: "开发工具" },
       { name: "VIA", url: "https://usevia.app/", desc: "配置兼容键盘的键位、宏与灯光。", group: "开发工具" },
       { name: "AlternativeTo", url: "https://alternativeto.net/", desc: "按用户评价查找软件与服务的替代方案。", group: "导航工具" },
-      { name: "FMHY", url: "https://fmhy.net/beginners-guide", desc: "免费资源与工具的大型索引合集。", group: "导航工具" },
+    ],
+  },
+  {
+    id: "resource-navigation",
+    label: "资源导航",
+    items: [
+      { name: "FMHY", url: "https://fmhy.net/beginners-guide", desc: "免费资源与工具的大型索引合集。", group: "资源导航" },
+      { name: "电子书宝藏导航", url: "https://shu.baozangdh.com/", desc: "书籍与电子阅读资源导航。", group: "资源导航" },
+      { name: "影视宝藏导航", url: "https://tv.baozangdh.com/", desc: "影视资源导航。", group: "资源导航" },
+      { name: "二次元宝藏导航", url: "https://acg.baozangdh.com/", desc: "二次元资源导航。", group: "资源导航" },
+      { name: "游戏宝藏导航", url: "https://game.baozangdh.com/", desc: "游戏资源导航。", group: "资源导航" },
+      { name: "AI导航123", url: "https://aidh123.com/", desc: "人工智能工具与资源导航。", group: "资源导航" },
     ],
   },
   {
@@ -167,6 +188,7 @@ const sourceSiteCategories = [
       { name: "FlowUs", url: "https://flowus.cn/", desc: "整理笔记、文档、项目与个人知识内容。", group: "知识管理" },
       { name: "VibeCafé", url: "https://vibecafe.ai/", desc: "交流 AI 编程、作品展示与相关资源的社区。", group: "技术社区" },
       { name: "Hacker News 播客", url: "https://hacker-news.agi.li/", desc: "科技新闻与 Hacker News 话题播客。", group: "技术社区" },
+      { name: "九墨日记", url: "https://jiumo-diary.com/", desc: "记录日常文字与个人生活的在线日记。", group: "个人记录" },
     ],
   },
   {
@@ -174,6 +196,8 @@ const sourceSiteCategories = [
     label: "生活服务",
     items: [
       { name: "租房地图", url: "https://web.house2048.cn/", desc: "聚合豆瓣、贝壳等租房信息，在地图展示房源与通勤路线。", group: "租房工具" },
+      { name: "城市租房生存指南", url: "https://zufang.ababtools.com/", desc: "面向租房新手的省钱、看房、签约与避坑指南。", group: "租房工具" },
+      { name: "鸭小租", url: "https://yaxiaozu.ababtools.com/", desc: "面向租客的租房网址导航，汇集找房与生活服务入口。", group: "租房工具" },
     ],
   },
   {
@@ -197,8 +221,8 @@ const sourceSiteCategories = [
       { name: "DaseinAI", url: "https://www.daseinai.xyz/register?aff=VWHM8SMXYMLH", desc: "AI 模型 API 接入与中转服务。", group: "AI 订阅" },
       { name: "ProAIAPI", url: "https://proaiapi.vip/register?aff=WsJ0", desc: "AI 模型 API 接入与中转服务。", group: "AI 订阅" },
       { name: "Dragon3", url: "https://newapi.dragon3api.com/sign-up?aff=aEBR", desc: "AI 模型 API 接入与中转服务。", group: "AI 订阅" },
-      { name: "大象网络", url: "https://dx.elphantroute.com/app#/register?code=n5KEb6em", desc: "大象网络订阅服务注册入口。", group: "网络订阅" },
-      { name: "SakuraCat", url: "https://sakuracat-1.com/register?code=Kuc1kZi6", desc: "SakuraCat 网络代理订阅与账户注册。", group: "网络订阅" },
+      { name: "大象网络", url: "https://dx.elphantroute.com/app#/register?code=n5KEb6em", desc: "提供网络代理订阅服务。", group: "网络订阅" },
+      { name: "SakuraCat", url: "https://sakuracat-1.com/register?code=Kuc1kZi6", desc: "提供网络代理订阅服务。", group: "网络订阅" },
     ],
   },
 ];
@@ -214,6 +238,7 @@ const categoryRules = [
   { id: "learning", label: "在线学习", match: (category) => category.id === "learning" },
   { id: "encyclopedia", label: "综合百科", match: (category) => category.id === "encyclopedia" },
   { id: "culture-science", label: "文化科学", match: (category) => category.id === "culture-science" },
+  { id: "resource-navigation", label: "资源导航", match: (category) => category.id === "resource-navigation" },
   { id: "developer", label: "开发工具", match: (category) => category.id === "developer" },
   { id: "network-testing", label: "网络测试", match: (category) => category.id === "network-testing" },
   { id: "community", label: "社区记录", match: (category) => category.id === "community" },
