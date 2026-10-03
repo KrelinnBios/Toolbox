@@ -77,6 +77,7 @@ const sourceSiteCategories = [
     id: "ebooks",
     label: "电子书籍",
     items: [
+      { name: "鸠摩搜书", url: "https://jiumo-diary.com/", desc: "电子书搜索与阅读资源检索平台。", group: "电子书库" },
       { name: "书格", url: "https://www.shuge.org/", desc: "古籍、书画与历史文献的数字化影像。", group: "古籍文献" },
       { name: "识典古籍", url: "https://www.shidianguji.com/", desc: "古籍 OCR 识别与全文检索平台。", group: "古籍文献" },
       { name: "中国哲学书电子化计划", url: "https://ctext.org/zhs", desc: "先秦两汉文献全文数据库。", group: "古籍文献" },
@@ -188,7 +189,6 @@ const sourceSiteCategories = [
       { name: "FlowUs", url: "https://flowus.cn/", desc: "整理笔记、文档、项目与个人知识内容。", group: "知识管理" },
       { name: "VibeCafé", url: "https://vibecafe.ai/", desc: "交流 AI 编程、作品展示与相关资源的社区。", group: "技术社区" },
       { name: "Hacker News 播客", url: "https://hacker-news.agi.li/", desc: "科技新闻与 Hacker News 话题播客。", group: "技术社区" },
-      { name: "九墨日记", url: "https://jiumo-diary.com/", desc: "记录日常文字与个人生活的在线日记。", group: "个人记录" },
     ],
   },
   {
