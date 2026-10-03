@@ -194,10 +194,10 @@ main {
   height: 38px;
   color: #fff;
   background: transparent;
-  border: 2px solid #4c4674;
-  transition: background 120ms steps(2, end), border-color 120ms steps(2, end), color 120ms steps(2, end);
+  border: none;
+  transition: color 120ms steps(2, end);
 }
-.tools-sidebar-link:hover { color: var(--ink); background: var(--acid); border-color: var(--acid); }
+.tools-sidebar-link:hover { color: var(--acid); }
 .tools-sidebar-link svg { width: 19px; height: 19px; }
 .tools-tab {
   display: flex;
@@ -487,11 +487,11 @@ main {
     width: 44px;
     height: 44px;
     color: var(--ink);
-    background: var(--surface);
-    border: 2px solid var(--ink);
-    box-shadow: 3px 3px 0 var(--ink);
+    background: transparent;
+    border: none;
+    transition: color 120ms steps(2, end);
   }
-  .tools-sidebar-link:hover { color: var(--ink); background: var(--acid); border-color: var(--ink); }
+  .tools-sidebar-link:hover { color: var(--acid); }
   .tools-sidebar-link svg { width: 21px; height: 21px; }
   .tools-tabs::-webkit-scrollbar { display: none; }
   .tools-tab {
