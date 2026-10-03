@@ -183,9 +183,7 @@ const sourceSiteCategories = [
     label: "社区记录",
     items: [
       { name: "NeoDB", url: "https://neodb.social/", desc: "记录和分享图书、影视、音乐与游戏。", group: "影音记录" },
-      { name: "IMDb", url: "https://www.imdb.com/", desc: "查询电影、电视剧、演员资料与观众评分。", group: "影音记录" },
       { name: "Bangumi", url: "https://bgm.tv/", desc: "记录和查询动画、游戏、音乐与图书内容。", group: "影音记录" },
-      { name: "RIP", url: "https://rip.abloom.site/bei", desc: "纪念与墓志铭记录平台。", group: "其他记录" },
       { name: "FlowUs", url: "https://flowus.cn/", desc: "整理笔记、文档、项目与个人知识内容。", group: "知识管理" },
       { name: "VibeCafé", url: "https://vibecafe.ai/", desc: "交流 AI 编程、作品展示与相关资源的社区。", group: "技术社区" },
       { name: "Hacker News 播客", url: "https://hacker-news.agi.li/", desc: "科技新闻与 Hacker News 话题播客。", group: "技术社区" },
