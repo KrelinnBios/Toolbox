@@ -63,7 +63,7 @@ const sourceSiteCategories = [
       { name: "爱看机器人", url: "https://www.imoviebot.com/", desc: "搜索电影、电视剧等影视资源。", group: "影视资源" },
       { name: "资源机器人", url: "https://www.ziyuan520.com/", desc: "综合资源检索机器人，可免费查找影视、游戏、软件、音乐和电子书等资源。", group: "影视资源" },
       { name: "ZIP0", url: "https://zip0.com/?r=PFWHX7", desc: "影视聚合搜索与播放，支持选集和切换线路。", group: "影视资源" },
-      { name: "SyncTV 文档", url: "https://docs.synctv.wiki/", desc: "SyncTV 多人同步观影工具的安装、部署与使用文档。", group: "影视资源" },
+      { name: "SyncTV", url: "https://docs.synctv.wiki/", desc: "SyncTV 多人同步观影工具的安装、部署与使用文档。", group: "影视资源" },
       { name: "GGemu", url: "https://ggemu.com/", desc: "提供复古游戏模拟器与相关游戏资源下载。", group: "游戏资源" },
       { name: "Steam Card Exchange", url: "https://www.steamcardexchange.net/", desc: "查询 Steam 集换式卡牌、徽章与资料背景。", group: "游戏资源" },
       { name: "Radio Garden", url: "https://radio.garden/", desc: "在地球仪上收听全球各地的电台。", group: "音乐电台" },
@@ -175,7 +175,7 @@ const sourceSiteCategories = [
       { name: "CleanIP", url: "https://cleanip.io/", desc: "IP 地址质量检测与黑名单查询工具。", group: "网络测试" },
       { name: "IPPure", url: "https://ippure.com/", desc: "IP 纯净度分析与代理检测服务。", group: "网络测试" },
       { name: "Downdetector", url: "https://downdetector.com/", desc: "查询各类网络服务的故障与中断状态。", group: "网络测试" },
-      { name: "Fast.com", url: "https://fast.com/", desc: "Netflix 提供的网络下载速度测试。", group: "网络测试" },
+      { name: "Fast", url: "https://fast.com/", desc: "Netflix 提供的网络下载速度测试。", group: "网络测试" },
     ],
   },
   {
@@ -186,7 +186,7 @@ const sourceSiteCategories = [
       { name: "Bangumi", url: "https://bgm.tv/", desc: "记录和查询动画、游戏、音乐与图书内容。", group: "影音记录" },
       { name: "FlowUs", url: "https://flowus.cn/", desc: "整理笔记、文档、项目与个人知识内容。", group: "知识管理" },
       { name: "VibeCafé", url: "https://vibecafe.ai/", desc: "交流 AI 编程、作品展示与相关资源的社区。", group: "技术社区" },
-      { name: "Hacker News 播客", url: "https://hacker-news.agi.li/", desc: "科技新闻与 Hacker News 话题播客。", group: "技术社区" },
+      { name: "Hacker News", url: "https://hacker-news.agi.li/", desc: "科技新闻与 Hacker News 话题播客。", group: "技术社区" },
     ],
   },
   {
