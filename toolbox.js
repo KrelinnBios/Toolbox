@@ -52,12 +52,12 @@ function groupedItems(category) {
 
 function renderTabs() {
   const categories = [...siteCategories];
+  const sidebarLink = toolsTabs.querySelector(".tools-sidebar-link");
   const tabsHTML = `
     ${categories
       .map(
-        (category, index) => `
+        (category) => `
       <button class="tools-tab category-${escapeHtml(category.id)}" type="button" data-category="${escapeHtml(category.id)}" aria-pressed="false">
-        <span class="tools-tab-number" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
         <span class="tools-tab-label">${escapeHtml(category.label)}</span>
         <span class="tools-tab-count">${category.items.length}</span>
       </button>
@@ -66,6 +66,7 @@ function renderTabs() {
       .join("")}
   `;
   toolsTabs.innerHTML = tabsHTML;
+  if (sidebarLink) toolsTabs.append(sidebarLink);
 }
 
 function renderSections() {
@@ -200,6 +201,9 @@ siteSearch.addEventListener("input", (event) => {
 
 window.addEventListener("scroll", updateActiveCategoryFromScroll, { passive: true });
 window.addEventListener("resize", updateActiveCategoryFromScroll);
+
+// iOS Safari 只有在存在 touchstart 监听时才会应用 :active 按压样式
+document.addEventListener("touchstart", () => {}, { passive: true });
 
 toolsSections.addEventListener("load", (event) => {
   if (event.target.tagName !== "IMG") return;

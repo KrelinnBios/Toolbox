@@ -186,9 +186,9 @@ main {
 }
 .tools-search input::placeholder { color: #77758f; }
 .tools-tabs { display: flex; flex: 1 1 auto; min-height: 0; flex-direction: column; justify-content: center; gap: 9px; }
-.tools-sidebar-links { display: flex; flex: none; gap: 8px; }
 .tools-sidebar-link {
   display: grid;
+  flex: none;
   place-items: center;
   width: 38px;
   height: 38px;
@@ -216,7 +216,6 @@ main {
 }
 .tools-tab:hover { color: #fff; background: #292542; border-color: #4c4674; }
 .tools-tab.is-active { color: var(--ink); background: var(--acid); border-color: var(--acid); box-shadow: none; transform: none; }
-.tools-tab-number { display: none; }
 .tools-tab-count { color: var(--sidebar-muted); font: 13px "Courier Prime", monospace; }
 .tools-tab.is-active .tools-tab-count { color: var(--ink); }
 
@@ -420,10 +419,9 @@ main {
     box-shadow: none;
     transform: none;
   }
-  .tools-tab-number { display: none; }
   .tools-tab-count { color: var(--sidebar-muted); font-size: 11px; }
   .tools-tab.is-active .tools-tab-count { color: var(--ink); }
-  .tools-sidebar-links { margin-top: auto; }
+  .tools-sidebar-link { margin-top: 8px; }
 }
 
 @media (min-width: 1500px) {
@@ -465,7 +463,7 @@ main {
     flex-direction: row;
     justify-content: flex-start;
     gap: 8px;
-    padding: 2px 116px 4px 16px;
+    padding: 2px 16px 4px;
     overflow-x: auto;
     overflow-y: hidden;
     overscroll-behavior-x: contain;
@@ -476,22 +474,20 @@ main {
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;
   }
-  .tools-sidebar-links {
-    position: absolute;
-    right: 12px;
-    bottom: 13px;
-    z-index: 1;
-    gap: 7px;
-  }
   .tools-sidebar-link {
-    width: 44px;
-    height: 44px;
+    width: auto;
+    height: auto;
+    min-height: 44px;
+    padding: 8px 12px;
+    scroll-snap-align: center;
     color: var(--ink);
-    background: transparent;
-    border: none;
-    transition: color 120ms steps(2, end);
+    background: var(--surface);
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: background 120ms steps(2, end);
   }
-  .tools-sidebar-link:hover { color: var(--acid); }
+  .tools-sidebar-link:hover { color: var(--ink); background: #fff; }
+  .tools-sidebar-link:active { color: var(--ink); background: var(--acid); }
   .tools-sidebar-link svg { width: 21px; height: 21px; }
   .tools-tabs::-webkit-scrollbar { display: none; }
   .tools-tab {
@@ -509,8 +505,7 @@ main {
   }
   .tools-tab:hover { color: var(--ink); background: #fff; border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
   .tools-tab.is-active { color: var(--ink); background: var(--acid); border-color: var(--ink); box-shadow: 3px 3px 0 var(--ink); transform: none; }
-  .tools-tab-count { color: var(--muted); }
-  .tools-tab.is-active .tools-tab-count { color: var(--ink); }
+  .tools-tab-count { display: none; }
 
   main { width: auto; margin: 0 16px; padding: 0 0 calc(40px + env(safe-area-inset-bottom, 0px)); }
 
@@ -556,7 +551,7 @@ main {
 
 @media (max-width: 380px) {
   .tools-sidebar { margin: 0 -14px; }
-  .tools-tabs { padding-left: 14px; padding-right: 116px; scroll-padding-left: 14px; }
+  .tools-tabs { padding-left: 14px; padding-right: 14px; scroll-padding-left: 14px; }
   .tools-tab { min-height: 42px; padding: 7px 10px; font-size: 14px; }
   .tools-section-title { font-size: 20px; }
   main { margin: 0 14px; }
