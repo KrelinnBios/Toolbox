@@ -186,6 +186,7 @@ main {
 }
 .tools-search input::placeholder { color: #77758f; }
 .tools-tabs { display: flex; flex: 1 1 auto; min-height: 0; flex-direction: column; justify-content: center; gap: 9px; }
+.tools-sidebar-actions { display: flex; flex: none; align-items: center; gap: 8px; }
 .tools-sidebar-link {
   display: grid;
   flex: none;
@@ -199,6 +200,8 @@ main {
 }
 .tools-sidebar-link:hover { color: var(--acid); }
 .tools-sidebar-link svg { width: 19px; height: 19px; }
+.tools-sidebar-link--home { width: 44px; height: 44px; }
+.tools-sidebar-link--home svg { width: 23px; height: 23px; }
 .tools-tab {
   display: flex;
   align-items: center;
@@ -421,7 +424,8 @@ main {
   }
   .tools-tab-count { color: var(--sidebar-muted); font-size: 11px; }
   .tools-tab.is-active .tools-tab-count { color: var(--ink); }
-  .tools-sidebar-link { margin-top: 8px; }
+  .tools-sidebar-actions { margin-top: 8px; gap: 0; }
+  .tools-sidebar-link--home { margin-left: -4px; }
 }
 
 @media (min-width: 1500px) {
@@ -489,6 +493,7 @@ main {
   .tools-sidebar-link:hover { color: var(--ink); background: #fff; }
   .tools-sidebar-link:active { color: var(--ink); background: var(--acid); }
   .tools-sidebar-link svg { width: 21px; height: 21px; }
+  .tools-sidebar-link--home svg { width: 25px; height: 25px; }
   .tools-tabs::-webkit-scrollbar { display: none; }
   .tools-tab {
     flex: none;

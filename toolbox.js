@@ -52,7 +52,7 @@ function groupedItems(category) {
 
 function renderTabs() {
   const categories = [...siteCategories];
-  const sidebarLink = toolsTabs.querySelector(".tools-sidebar-link");
+  const sidebarActions = toolsTabs.querySelector(".tools-sidebar-actions");
   const tabsHTML = `
     ${categories
       .map(
@@ -66,7 +66,7 @@ function renderTabs() {
       .join("")}
   `;
   toolsTabs.innerHTML = tabsHTML;
-  if (sidebarLink) toolsTabs.append(sidebarLink);
+  if (sidebarActions) toolsTabs.append(sidebarActions);
 }
 
 function renderSections() {
