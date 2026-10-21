@@ -121,6 +121,7 @@ const sourceSiteCategories = [
       { name: "Avibase", url: "https://avibase.bsc-eoc.org/avibase.jsp", desc: "全球鸟类物种数据库与分布信息。", group: "专业资料" },
       { name: "Funes", url: "https://funes.world/", desc: "科幻与奇幻作品信息库。", group: "专业资料" },
       { name: "MuscleWiki", url: "https://musclewiki.com/zh-cn", desc: "按肌肉部位查询健身动作与演示。", group: "专业资料" },
+      { name: "PrismSelf", url: "https://prismself.vip/", desc: "性别、心理与人际关系主题的中文知识库，含概念图表、术语与自评量表。", group: "专业资料" },
       { name: "SaDuck", url: "https://saduck.top/", desc: "公务员考试知识库、考点解析与备考工具。", group: "专业资料" },
       { name: "Wolfram Alpha", url: "https://www.wolframalpha.com/", desc: "数学计算、数据分析与知识问答引擎。", group: "科学工具" },
       { name: "LLM Live Rankings", url: "https://rank.svenrogue.top/", desc: "全球大模型实时热度排行榜。", group: "科学工具" },
@@ -152,6 +153,7 @@ const sourceSiteCategories = [
       { name: "Carbon", url: "https://carbon.now.sh/", desc: "代码截图美化工具，支持多种主题与语言。", group: "开发工具" },
       { name: "Coolors", url: "https://coolors.co/", desc: "配色方案生成与调色板管理工具。", group: "开发工具" },
       { name: "VIA", url: "https://usevia.app/", desc: "配置兼容键盘的键位、宏与灯光。", group: "开发工具" },
+      { name: "Outvalue", url: "https://outvalue.lol/", desc: "面向独立开发者的 SaaS 定价与营收计算器，含利润、MRR/ARR 和盈亏平衡测算。", group: "运营工具" },
       { name: "AlternativeTo", url: "https://alternativeto.net/", desc: "按用户评价查找软件与服务的替代方案。", group: "导航工具" },
     ],
   },
@@ -196,6 +198,7 @@ const sourceSiteCategories = [
       { name: "租房地图", url: "https://web.house2048.cn/", desc: "聚合豆瓣、贝壳等租房信息，在地图展示房源与通勤路线。", group: "租房工具" },
       { name: "城市租房生存指南", url: "https://zufang.ababtools.com/", desc: "面向租房新手的省钱、看房、签约与避坑指南。", group: "租房工具" },
       { name: "鸭小租", url: "https://yaxiaozu.ababtools.com/", desc: "面向租客的租房网址导航，汇集找房与生活服务入口。", group: "租房工具" },
+      { name: "Which Me", url: "https://whichme.xyz/", desc: "提供趣味测试与人格、性取向等心理自评问卷，结果仅保存在浏览器本地。", group: "心理测试" },
     ],
   },
   {
