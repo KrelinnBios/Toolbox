@@ -172,9 +172,9 @@ const sourceSiteCategories = [
     id: "network-testing",
     label: "网络测试",
     items: [
+      { name: "IPPure", url: "https://ippure.com/", desc: "IP 纯净度分析与代理检测服务。", group: "网络测试" },
       { name: "iPure", url: "https://ipure.dev/", desc: "IP 纯净度检测与代理识别。", group: "网络测试" },
       { name: "CleanIP", url: "https://cleanip.io/", desc: "IP 地址质量检测与黑名单查询工具。", group: "网络测试" },
-      { name: "IPPure", url: "https://ippure.com/", desc: "IP 纯净度分析与代理检测服务。", group: "网络测试" },
       { name: "Downdetector", url: "https://downdetector.com/", desc: "查询各类网络服务的故障与中断状态。", group: "网络测试" },
       { name: "Fast", url: "https://fast.com/", desc: "Netflix 提供的网络下载速度测试。", group: "网络测试" },
     ],
