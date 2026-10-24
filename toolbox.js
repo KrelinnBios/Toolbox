@@ -1,9 +1,7 @@
 const toolsTabs = document.querySelector("#tools-tabs");
 const toolsSections = document.querySelector("#tools-sections");
-const toolsCount = document.querySelector("#tools-count");
 const toolsEmpty = document.querySelector("#tools-empty");
 const siteSearch = document.querySelector("#site-search");
-const toolsViewTitle = document.querySelector("#tools-view-title");
 const toolsTotal = document.querySelector("#tools-total");
 
 let searchQuery = "";
@@ -52,7 +50,6 @@ function groupedItems(category) {
 
 function renderTabs() {
   const categories = [...siteCategories];
-  const sidebarActions = toolsTabs.querySelector(".tools-sidebar-actions");
   const tabsHTML = `
     ${categories
       .map(
@@ -66,7 +63,6 @@ function renderTabs() {
       .join("")}
   `;
   toolsTabs.innerHTML = tabsHTML;
-  if (sidebarActions) toolsTabs.append(sidebarActions);
 }
 
 function renderSections() {
@@ -78,9 +74,6 @@ function renderSections() {
     return sum + category.items.filter((item) => matchesQuery(item, category, searchQuery)).length;
   }, 0);
 
-  toolsCount.textContent = "";
-  toolsViewTitle.textContent = "";
-  toolsViewTitle.hidden = true;
   toolsTotal.textContent = `共 ${total} 个站点`;
   toolsEmpty.hidden = total !== 0;
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
       name="description"
-      content="集中管理常用在线工具，快速搜索与一键访问。"
+      content="资源导航：按用途整理常用在线工具与资源，支持实时搜索与一键访问。"
     >
     <meta name="theme-color" content="#eeff41">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -13,19 +13,19 @@
     <meta http-equiv="Expires" content="0">
     <link rel="shortcut icon" href="./favicon.svg?v=202609251">
     <link rel="icon" href="./favicon.svg?v=202609251">
-    <meta property="og:title" content="Toolbox - 工具导航">
-    <meta property="og:description" content="集中管理常用在线工具，快速搜索与一键访问。">
+    <meta property="og:title" content="Toolbox - 资源导航">
+    <meta property="og:description" content="资源导航：按用途整理常用在线工具与资源，支持实时搜索与一键访问。">
     <meta property="og:url" content="https://toolbox.krelinnbios.com/">
-    <title>Toolbox - 工具导航</title>
+    <title>Toolbox - 资源导航</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
       href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="./toolbox.css?v=202610195">
-    <script src="./sites.js?v=202610212" defer></script>
-    <script src="./toolbox.js?v=202610192" defer></script>
+    <link rel="stylesheet" href="./toolbox.css?v=202610261">
+    <script src="./sites.js?v=202610241" defer></script>
+    <script src="./toolbox.js?v=202610252" defer></script>
     <script
       defer
       src="https://vibecafe.ai/telemetry/v1.js"
@@ -38,8 +38,16 @@
 
     <div class="tools-layout">
       <aside class="tools-sidebar" aria-labelledby="directory-label">
+        <div class="tools-sidebar-head">
+          <a class="tools-brand" href="./index.html">TOOLBOX <span>工具 · 资源 · 导航</span></a>
+          <nav class="page-switch" aria-label="页面导航">
+            <a href="./index.html" aria-current="page" aria-label="资源导航">导航</a>
+            <a href="./tools.html" aria-label="在线工具">工具</a>
+          </nav>
+        </div>
         <p class="tools-directory-label" id="directory-label" hidden>分类目录</p>
-        <div class="tools-tabs" id="tools-tabs" role="group" aria-labelledby="directory-label">
+        <div class="tools-nav">
+          <div class="tools-tabs" id="tools-tabs" role="group" aria-labelledby="directory-label"></div>
           <div class="tools-sidebar-actions">
             <a
               class="tools-sidebar-link"
@@ -71,7 +79,7 @@
       <main id="main" tabindex="-1">
         <section class="tools-profile" aria-labelledby="tools-title">
           <div class="tools-heading">
-            <h1 id="tools-title">工具导航</h1>
+            <h1 id="tools-title">资源导航</h1>
           </div>
           <p class="tools-total" id="tools-total" aria-live="polite"></p>
         </section>
@@ -92,10 +100,6 @@
           </label>
         </section>
 
-        <div class="tools-results-head">
-          <p class="tools-view-title" id="tools-view-title">全部站点</p>
-          <p class="tools-count" id="tools-count" role="status" aria-live="polite"></p>
-        </div>
         <p class="tools-empty" id="tools-empty" hidden>没有找到匹配的站点，换个关键词试试。</p>
 
         <div class="tools-sections" id="tools-sections"></div>

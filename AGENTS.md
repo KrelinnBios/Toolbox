@@ -17,6 +17,9 @@ Toolbox 是一个纯静态的工具导航网页，用于集中管理和快速访
 - `toolbox.css` - 全部样式，包含响应式布局和滚动条样式
 - `toolbox.js` - 搜索、目录定位、排序和渲染逻辑
 - `sites.js` - 站点数据和分类定义
+- `tools.html`、`calculators.css`、`calculators.js` - 在线工具目录、计算页面及交互
+- `calculations.js`、`calculator-views.js`、`calculator-copy.js`、`calculator-ui.js` - 计算公式、场景渲染、简体中文文案及表单与结果渲染
+- `test/calculations.test.mjs` - Node.js 原生计算回归测试（Node.js 24+）
 - `favicon.svg` - 网站图标
 - `screenshots/` - README 使用的界面截图
 
@@ -136,6 +139,8 @@ const siteCategories = [
 部分站点本身就是英文网站，保留原始描述有助于用户识别。描述主要用于搜索匹配，而非完整翻译。
 
 ## 验证
+
+计算工具修改后运行 `node --test test/calculations.test.mjs`，并通过静态 HTTP 服务验证 `tools.html` 的工具搜索、输入更新、场景切换、货币标识和订阅增删。该页面使用原生 ES 模块，无需安装依赖或构建。
 
 修改后至少检查：
 

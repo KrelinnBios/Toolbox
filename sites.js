@@ -153,7 +153,6 @@ const sourceSiteCategories = [
       { name: "Carbon", url: "https://carbon.now.sh/", desc: "代码截图美化工具，支持多种主题与语言。", group: "开发工具" },
       { name: "Coolors", url: "https://coolors.co/", desc: "配色方案生成与调色板管理工具。", group: "开发工具" },
       { name: "VIA", url: "https://usevia.app/", desc: "配置兼容键盘的键位、宏与灯光。", group: "开发工具" },
-      { name: "Outvalue", url: "https://outvalue.lol/", desc: "面向独立开发者的 SaaS 定价与营收计算器，含利润、MRR/ARR 和盈亏平衡测算。", group: "运营工具" },
       { name: "AlternativeTo", url: "https://alternativeto.net/", desc: "按用户评价查找软件与服务的替代方案。", group: "导航工具" },
     ],
   },
