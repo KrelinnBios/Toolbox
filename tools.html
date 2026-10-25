@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="在线工具：23 个免费计算器，涵盖收入与定价、增长与留存、成本与规划。在浏览器本地计算，无需注册。">
+    <meta name="theme-color" content="#eeff41">
+    <meta property="og:title" content="Toolbox - 在线工具">
+    <meta property="og:description" content="在线工具：定价、收入、增长和成本计算器，免费使用，输入内容不会上传。">
+    <meta property="og:url" content="https://toolbox.krelinnbios.com/tools.html">
+    <title>Toolbox - 在线工具</title>
+    <link rel="icon" href="./favicon.svg?v=202610259">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./toolbox.css?v=202610259">
+    <link rel="stylesheet" href="./calculators.css?v=202610259">
+    <script type="module" src="./calculators.js?v=202610259"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <div class="tools-layout calculator-layout">
+      <aside class="tools-sidebar" aria-label="工具分类">
+        <div class="tools-sidebar-head">
+          <a class="tools-brand" href="./index.html">TOOLBOX <span>导航 · 资源 · 工具</span></a>
+          <nav class="page-switch" aria-label="页面导航">
+            <a href="./index.html" aria-label="资源导航">导航</a>
+            <a href="./tools.html" aria-current="page" aria-label="在线工具">工具</a>
+          </nav>
+        </div>
+        <p class="calculator-sidebar-label" id="calculator-sidebar-label">工具分类</p>
+        <div class="tools-nav">
+          <nav class="calculator-directory" id="calculator-directory" aria-labelledby="calculator-sidebar-label"></nav>
+          <div class="tools-sidebar-actions">
+            <a
+              class="tools-sidebar-link"
+              href="https://github.com/KrelinnBios/Toolbox"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.56 22.29 24 17.79 24 12.5 24 5.87 18.63.5 12 .5Z" />
+              </svg>
+            </a>
+            <a
+              class="tools-sidebar-link tools-sidebar-link--home"
+              href="https://krelinnbios.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="我的主页"
+              title="我的主页"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5Z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </aside>
+      <main id="main" tabindex="-1">
+        <div class="calculator-load-warning" id="calculator-load-warning" role="alert" hidden>
+          <strong>工具列表没有加载</strong>
+          <p>直接双击打开 HTML 文件时，浏览器会拦截计算脚本。请通过本地 HTTP 服务访问，或打开<a href="https://toolbox.krelinnbios.com/tools.html">在线版</a>。</p>
+        </div>
+        <section id="calculator-catalog" aria-labelledby="tools-title">
+          <div class="tools-profile">
+            <div class="tools-heading"><h1 id="tools-title">在线工具</h1></div>
+            <p class="tools-total" id="calculator-count" role="status" aria-live="polite">23 个工具</p>
+          </div>
+          <div class="calculator-toolbar" role="search">
+            <label class="tools-search" for="calculator-search">
+              <svg class="tools-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-4.35-4.35"></path>
+              </svg>
+              <input
+                id="calculator-search"
+                type="search"
+                placeholder="搜索工具名称或用途"
+                autocomplete="off"
+                aria-label="搜索工具"
+              >
+            </label>
+          </div>
+          <p class="tools-empty" id="calculator-empty" hidden>没有找到匹配的工具，换个关键词试试。</p>
+          <div id="calculator-sections" class="tools-sections"></div>
+        </section>
+        <section id="calculator-detail" aria-labelledby="calculator-title" hidden>
+          <p class="calculator-category" id="calculator-category"></p>
+          <h1 id="calculator-title" tabindex="-1"></h1>
+          <p class="calculator-intro" id="calculator-intro"></p>
+          <div class="tool-card">
+            <div class="tool-card-head">
+              <h2>你的数据</h2>
+              <label class="tool-currency" for="tool-currency"><span>货币</span><select id="tool-currency"></select></label>
+            </div>
+            <div id="calculator-scenarios" class="tool-scenarios" role="group" aria-label="计算场景" hidden></div>
+            <form id="calculator-form" autocomplete="off"></form>
+            <div class="calculator-output-head">
+              <h2>估算结果</h2>
+              <span>随输入实时更新</span>
+            </div>
+            <div id="calculator-output" aria-live="polite" aria-atomic="true"></div>
+            <p class="tool-note">切换货币只改变金额标识，不进行汇率换算。</p>
+          </div>
+        </section>
+        <p class="calculator-disclaimer">结果基于输入和简化假设，仅用于估算和规划，不构成财务、税务、法律或投资建议。</p>
+        <noscript><p>请启用 JavaScript，以使用本地计算工具。</p></noscript>
+      </main>
+    </div>
+    <script>
+      (() => {
+        const warning = document.querySelector("#calculator-load-warning");
+        const showWarning = () => { warning.hidden = false; };
+        if (location.protocol === "file:") {
+          showWarning();
+        } else {
+          window.setTimeout(() => {
+            if (!document.querySelector("#calculator-directory .tools-tab")) showWarning();
+          }, 2000);
+        }
+      })();
+    </script>
+  </body>
+</html>

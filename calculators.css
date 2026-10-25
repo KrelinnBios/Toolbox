@@ -1,0 +1,94 @@
+.calculator-layout { min-height: 100vh; }
+.calculator-sidebar-label { margin: 0 8px; color: var(--sidebar-muted); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; }
+.calculator-directory { display: grid; gap: 8px; margin: 14px 0 auto; }
+.calculator-intro { margin: 6px 0 0; color: var(--muted); line-height: 1.8; }
+.calculator-toolbar { padding: 24px 0 20px; }
+.calculator-layout .tools-search input { padding-left: 54px; }
+.calculator-load-warning { margin: 20px 0 0; padding: 18px 20px; background: #fff1e8; border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--red); font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+.calculator-load-warning strong { display: block; font-size: 16px; }
+.calculator-load-warning p { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.calculator-load-warning a { color: var(--blue); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.calculator-layout .tools-card {
+  min-height: 0;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+}
+.calculator-card-mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--ink);
+  background: var(--acid);
+  border: 2px solid var(--ink);
+  font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+.calculator-layout .tools-card-name { padding-right: 0; }
+.calculator-layout .tools-card-desc { margin-top: 6px; }
+.tools-section.category-revenue { --card-shadow: var(--blue); --card-active: #e3e8ff; }
+.tools-section.category-growth { --card-shadow: var(--green); --card-active: #def3e6; }
+.tools-section.category-planning { --card-shadow: var(--orange); --card-active: #fff0dc; }
+.calculator-category { margin: 32px 0 12px; color: var(--blue); font-weight: 700; }
+#calculator-detail h1 { margin: 0; font: 900 clamp(28px, 3vw, 44px)/1.35 "Noto Sans SC", sans-serif; }
+.tool-card { margin-top: 28px; padding: 28px; border: 2px solid var(--ink); background: var(--surface); box-shadow: 6px 6px 0 var(--ink); }
+.tool-card-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 26px; }
+.tool-card-head h2 { margin: 0; font-size: 22px; }
+.tool-currency { display: flex; align-items: center; gap: 10px; }
+.tool-currency select, .tool-field input, .tool-field select { min-width: 0; max-width: 100%; min-height: 44px; padding: 10px 12px; color: var(--ink); background: #fff; border: 2px solid var(--ink); border-radius: 0; font: inherit; }
+.tool-field input[type="number"] { font-size: 18px; font-weight: 700; }
+.tool-field select { font-size: 16px; font-weight: 700; }
+.tool-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.tool-field { display: flex; flex-direction: column; gap: 9px; min-width: 0; font-size: 14px; font-weight: 700; }
+.tool-field input, .tool-field select { width: 100%; }
+.calculator-output-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-top: 30px; padding-top: 24px; border-top: 3px solid var(--ink); }
+.calculator-output-head h2 { margin: 0; font-size: 20px; }
+.calculator-output-head span { color: var(--muted); font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; font-size: 12px; font-weight: 700; }
+.tool-results { margin: 14px 0 0; }
+.tool-result { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 15px 12px; border-bottom: 1px solid #d9d7df; }
+.tool-result dt { min-width: 0; color: var(--muted); }
+.tool-result dd { margin: 0; text-align: right; overflow-wrap: anywhere; font-size: 18px; font-weight: 700; }
+.tool-result.strong { background: var(--acid); border-color: var(--ink); font-size: 18px; }
+.tool-result.strong dd { font-size: 20px; }
+.tool-result.strong dt { color: var(--ink); font-weight: 700; }
+.tool-note, .tool-warning { margin: 20px 0 0; font-size: 13px; line-height: 1.8; }
+.tool-note { color: var(--muted); }
+.tool-warning { border-left: 4px solid var(--red); padding: 12px 16px; background: #fff1e8; }
+.tool-table-wrap { margin-top: 24px; max-width: 100%; overflow-x: auto; }
+.tool-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tool-table th, .tool-table td { padding: 12px; border-bottom: 1px solid #d9d7df; text-align: right; white-space: nowrap; }
+.tool-table th { background: var(--paper); }
+.tool-table th:first-child, .tool-table td:first-child { text-align: left; }
+.tool-scenarios { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+.tool-scenarios button, .tool-action { min-height: 44px; padding: 9px 14px; border: 2px solid var(--ink); background: #fff; color: var(--ink); font-weight: 700; }
+.tool-scenarios button[aria-pressed="true"], .tool-action:hover { background: var(--acid); }
+.subscription-item { min-width: 0; margin: 22px 0; padding: 18px; border: 1px solid var(--ink); }
+.subscription-item legend { padding: 0 8px; font-weight: 700; }
+.subscription-actions { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 16px; font-size: 13px; }
+.calculator-disclaimer { margin-top: 36px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+@media (max-width: 800px) {
+  .calculator-layout .tools-sidebar { width: 100%; height: auto; margin: 0; }
+  .calculator-sidebar-label { display: none; }
+  .calculator-directory { display: flex; flex: 1 1 auto; min-width: 0; gap: 8px; margin: 0; padding: 2px 8px 5px 16px; overflow-x: auto; }
+  .calculator-directory .tools-tab { width: auto; white-space: nowrap; }
+  .calculator-layout .tools-profile { align-items: flex-start; flex-wrap: wrap; gap: 14px; }
+  .calculator-layout .tools-total { font-size: 18px; }
+  .calculator-intro { margin-top: 10px; }
+  .calculator-toolbar { padding: 20px 0 8px; }
+  .calculator-output-head { margin-top: 28px; padding-top: 20px; }
+  .calculator-output-head h2 { font-size: 18px; }
+  .calculator-output-head span { display: none; }
+  .calculator-layout .tools-card { min-height: 0; gap: 12px; padding: 14px 13px; }
+  .calculator-card-mark { width: 42px; height: 42px; font-size: 11px; }
+  .tool-card { padding: 18px; box-shadow: 4px 4px 0 var(--ink); }
+  .tool-inputs { grid-template-columns: 1fr; }
+  .tool-result { gap: 12px; padding: 14px 8px; font-size: 14px; }
+  .tool-result.strong { font-size: 16px; }
+  .tool-result dd { max-width: 55%; font-size: 18px; }
+  .tool-result.strong dd { font-size: 20px; }
+  .subscription-item { padding: 12px; }
+}
