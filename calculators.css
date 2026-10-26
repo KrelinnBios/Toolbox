@@ -1,25 +1,37 @@
 .calculator-layout { min-height: 100vh; }
 .calculator-sidebar-label { margin: 0 8px; color: var(--sidebar-muted); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; }
 .calculator-directory { display: grid; gap: 8px; margin: 14px 0 auto; }
+/* 桌面端目录与资源导航页 .tools-tabs 的节奏完全一致：垂直居中、3px 间距。 */
+@media (min-width: 801px) {
+  .calculator-directory {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 3px;
+    margin: 0;
+    padding-top: 3px;
+  }
+}
 .calculator-intro { margin: 6px 0 0; color: var(--muted); line-height: 1.8; }
-.calculator-toolbar { padding: 24px 0 20px; }
-.calculator-layout .tools-search input { padding-left: 54px; }
+.calculator-toolbar { padding: 22px 0 20px; }
 .calculator-load-warning { margin: 20px 0 0; padding: 18px 20px; background: #fff1e8; border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--red); font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
 .calculator-load-warning strong { display: block; font-size: 16px; }
 .calculator-load-warning p { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .calculator-load-warning a { color: var(--blue); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .calculator-layout .tools-card {
-  min-height: 0;
+  min-height: 112px;
   align-items: flex-start;
   gap: 14px;
-  padding: 16px;
+  padding: 13px 12px;
 }
 .calculator-card-mark {
   display: grid;
   flex: none;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   color: var(--ink);
   background: var(--acid);
   border: 2px solid var(--ink);
@@ -28,8 +40,8 @@
   font-weight: 900;
   line-height: 1.2;
 }
-.calculator-layout .tools-card-name { padding-right: 0; }
-.calculator-layout .tools-card-desc { margin-top: 6px; }
+.calculator-layout .tools-card-name { padding-right: 15px; }
+.calculator-layout .tools-card-desc { margin-top: 8px; }
 .tools-section.category-revenue { --card-shadow: var(--blue); --card-active: #e3e8ff; }
 .tools-section.category-growth { --card-shadow: var(--green); --card-active: #def3e6; }
 .tools-section.category-planning { --card-shadow: var(--orange); --card-active: #fff0dc; }
@@ -73,17 +85,19 @@
 @media (max-width: 800px) {
   .calculator-layout .tools-sidebar { width: 100%; height: auto; margin: 0; }
   .calculator-sidebar-label { display: none; }
-  .calculator-directory { display: flex; flex: 1 1 auto; min-width: 0; gap: 8px; margin: 0; padding: 2px 8px 5px 16px; overflow-x: auto; }
+  .calculator-directory { display: flex; flex: 1 1 auto; min-width: 0; gap: 8px; margin: 0; padding: 2px 0 4px 16px; overflow-x: auto; }
   .calculator-directory .tools-tab { width: auto; white-space: nowrap; }
-  .calculator-layout .tools-profile { align-items: flex-start; flex-wrap: wrap; gap: 14px; }
-  .calculator-layout .tools-total { font-size: 18px; }
+  .calculator-layout .tools-profile { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+  .calculator-layout .tools-total { font-size: 15px; }
   .calculator-intro { margin-top: 10px; }
-  .calculator-toolbar { padding: 20px 0 8px; }
+  .calculator-toolbar { padding: 18px 0 8px; }
+  .calculator-layout .tools-card-name { padding-right: 0; }
+  .calculator-layout .tools-card-desc { margin-top: 6px; }
   .calculator-output-head { margin-top: 28px; padding-top: 20px; }
   .calculator-output-head h2 { font-size: 18px; }
   .calculator-output-head span { display: none; }
   .calculator-layout .tools-card { min-height: 0; gap: 12px; padding: 14px 13px; }
-  .calculator-card-mark { width: 42px; height: 42px; font-size: 11px; }
+  .calculator-card-mark { width: 38px; height: 38px; font-size: 11px; }
   .tool-card { padding: 18px; box-shadow: 4px 4px 0 var(--ink); }
   .tool-inputs { grid-template-columns: 1fr; }
   .tool-result { gap: 12px; padding: 14px 8px; font-size: 14px; }

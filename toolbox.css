@@ -444,7 +444,7 @@ main {
   }
   .tools-tabs {
     flex: 1 1 auto;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 3px;
     padding-top: 3px;
   }
