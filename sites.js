@@ -202,7 +202,7 @@ const sourceSiteCategories = [
     label: "订阅服务",
     items: [
       { name: "Dodo Payments", url: "https://app.dodopayments.com/", desc: "数字产品支付处理与订阅管理平台。", group: "支付服务" },
-      { name: "PriceAI", url: "https://priceai.cc/", desc: "对比 AI 订阅、官方 API 和中转 API 的价格、来源、库存与更新时间。", group: "AI 订阅" },
+      { name: "AI 低价卡网订阅与中转 API 比价雷达", url: "https://priceai.cc/", desc: "对比 AI 订阅、官方 API 和中转 API 的价格、来源、库存与更新时间。", group: "AI 订阅" },
       { name: "WildAI", url: "https://bewild.ai/?code=JDYR4ATU", desc: "ChatGPT、Claude 与 X 等服务的订阅代购。", group: "AI 订阅" },
       { name: "DaseinAI", url: "https://www.daseinai.xyz/register?aff=VWHM8SMXYMLH", desc: "AI 模型 API 接入与中转服务。", group: "AI 订阅" },
       { name: "菠萝AI商城", url: "https://mall.boluoai.shop/account.html?invite=E86Y857H", desc: "AI 订阅、Apple 礼品卡与账号等数字产品商城。", group: "AI 订阅" },
