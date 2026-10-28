@@ -85,7 +85,8 @@
 @media (max-width: 800px) {
   .calculator-layout .tools-sidebar { width: 100%; height: auto; margin: 0; }
   .calculator-sidebar-label { display: none; }
-  .calculator-directory { display: flex; flex: 1 1 auto; min-width: 0; gap: 8px; margin: 0; padding: 2px 0 4px 16px; overflow-x: auto; }
+  .calculator-directory { display: flex; flex: 1 1 auto; min-width: 0; gap: 8px; margin: 0; padding: 2px 0 4px 16px; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-left: 16px; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; touch-action: pan-x; }
+  .calculator-directory::-webkit-scrollbar { display: none; }
   .calculator-directory .tools-tab { width: auto; white-space: nowrap; }
   .calculator-layout .tools-profile { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
   .calculator-layout .tools-total { font-size: 15px; }
