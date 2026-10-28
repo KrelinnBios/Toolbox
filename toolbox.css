@@ -605,7 +605,7 @@ main {
 
   .tools-section { padding: 0 0 26px; scroll-margin-top: 76px; }
   .tools-section-head { margin-bottom: 12px; }
-  .tools-section-title { font-size: 22px; text-shadow: 3px 3px 0 var(--card-shadow, var(--acid)); }
+  .tools-section-title { font-size: 22px; text-shadow: 3px 3px 0 var(--acid); }
   .tools-section-count { font-size: 13px; }
 
   .tools-card,
