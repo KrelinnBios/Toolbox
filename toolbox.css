@@ -522,6 +522,7 @@ main {
   .tools-brand {
     display: block;
     margin-right: auto;
+    color: var(--ink);
     font-size: 18px;
     line-height: 1;
   }
