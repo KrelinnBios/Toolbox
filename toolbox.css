@@ -562,13 +562,13 @@ main {
     height: auto;
     min-height: 44px;
     padding: 8px;
-    color: var(--acid);
+    color: var(--ink);
     background: transparent;
     border: 0;
     box-shadow: none;
     transition: color 120ms steps(2, end);
   }
-  .tools-sidebar-link:hover { color: var(--ink); background: transparent; }
+  .tools-sidebar-link:hover { color: var(--acid); background: transparent; }
   .tools-sidebar-link:active { color: var(--ink); background: var(--acid); }
   .tools-sidebar-link svg { width: 21px; height: 21px; }
   .tools-sidebar-link--home svg { width: 25px; height: 25px; }
