@@ -9,6 +9,7 @@ const sourceSiteCategories = [
       { name: "Unsplash", url: "https://unsplash.com/", desc: "摄影师分享的高清照片，适合配图与设计参考。", group: "图片素材" },
       { name: "Pixabay", url: "https://pixabay.com/", desc: "图片、插画、视频、音乐与音效素材。", group: "图片素材" },
       { name: "Game Icons", url: "https://game-icons.net/", desc: "游戏主题图标，可下载 SVG 和 PNG 格式。", group: "图片素材" },
+      { name: "IP as Logo", url: "https://ipaslogo.com/", desc: "浏览并下载免费吉祥物 IP 形象 Logo 素材。", group: "图片素材" },
       { name: "Hello 图床", url: "https://www.helloimg.com/", desc: "上传、管理图片并生成可嵌入网页的外链。", group: "图床分享" },
     ],
   },
