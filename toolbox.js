@@ -27,6 +27,11 @@ function matchesQuery(item, category, query) {
   return haystack.includes(query.toLowerCase());
 }
 
+const itemNameCollator = new Intl.Collator("zh-Hans-CN", {
+  numeric: true,
+  sensitivity: "base",
+});
+
 function groupedItems(category) {
   const groups = new Map();
   const groupOrder = new Map();
@@ -43,9 +48,12 @@ function groupedItems(category) {
       groups.get(group).push(item);
     });
 
-  return [...groups.entries()].sort(
-    ([groupA], [groupB]) => groupOrder.get(groupA) - groupOrder.get(groupB),
-  );
+  return [...groups.entries()]
+    .sort(([groupA], [groupB]) => groupOrder.get(groupA) - groupOrder.get(groupB))
+    .map(([group, items]) => [
+      group,
+      items.sort((itemA, itemB) => itemNameCollator.compare(itemA.name, itemB.name)),
+    ]);
 }
 
 function renderTabs() {
