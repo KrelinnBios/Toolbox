@@ -20,6 +20,21 @@ describe("免费工具计算", () => {
         assert.strictEqual(free.threshold.units, null);
         assert.strictEqual(pricingProfit({ ...input, feePercent: 100 }).fees.priceForTarget, null);
     });
+    it("合并工具：费用明细各项相加等于总扣费与利润", () => {
+        const input = { price: 100, customers: 1, feePercent: 5.5, feeFixed: 0.4, costs: 5, variableCost: 0, targetNet: 0 };
+        const { profit, breakdown, threshold } = pricingProfit(input);
+        assert.ok(Math.abs(breakdown.percentFees - 5.5) < 1e-9);
+        assert.ok(Math.abs(breakdown.fixedFees - 0.4) < 1e-9);
+        assert.ok(Math.abs(breakdown.percentFees + breakdown.fixedFees - profit.fees) < 1e-9);
+        assert.ok(Math.abs(profit.netRevenue - breakdown.variableCosts - breakdown.operatingCosts - profit.profit) < 1e-9);
+        assert.ok(Math.abs(breakdown.annualProfit - 89.1 * 12) < 1e-9);
+        assert.strictEqual(threshold.units, 1);
+        assert.strictEqual(breakdown.customersToBreakEven, 0);
+        const short = pricingProfit({ price: 20, customers: 10, feePercent: 3, feeFixed: 0.3, costs: 500, variableCost: 5, targetNet: 0 });
+        assert.strictEqual(short.breakdown.customersToBreakEven, 26);
+        assert.strictEqual(pricingProfit({ ...input, price: 0 }).breakdown.fixedFees, 0);
+        assert.strictEqual(pricingProfit({ ...input, price: 0 }).breakdown.customersToBreakEven, null);
+    });
     it("项目报价：按人工与额外成本合计预留，零输入返回零", () => {
         assert.deepStrictEqual(projectQuote({ hours: 40, hourlyRate: 50, extraCosts: 200, reservePercent: 15 }), { base: 2200, reserve: 330, quote: 2530 });
         assert.deepStrictEqual(projectQuote({ hours: 0, hourlyRate: 0, extraCosts: 0, reservePercent: 15 }), { base: 0, reserve: 0, quote: 0 });

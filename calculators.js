@@ -1,7 +1,7 @@
-import { TOOL_SLUGS, TOOL_CATEGORIES, TOOL_CURRENCIES, isToolCurrency, toolCategoryOf, tieredPricing, subscriptionCosts } from "./calculations.js?v=202610241";
-import { toolsCopyZh as baseText } from "./calculator-copy.js?v=202610241";
+import { TOOL_SLUGS, TOOL_CATEGORIES, TOOL_CURRENCIES, isToolCurrency, toolCategoryOf, tieredPricing, subscriptionCosts } from "./calculations.js?v=202611041";
+import { toolsCopyZh as baseText } from "./calculator-copy.js?v=202611042";
 import { escapeHtml, field, resultRow } from "./calculator-ui.js?v=202610241";
-import * as views from "./calculator-views.js?v=202610241";
+import * as views from "./calculator-views.js?v=202611042";
 
 const calculators = {
   "pricing-profit-calculator": views.ProfitCalculator,

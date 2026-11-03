@@ -1,4 +1,4 @@
-import { adRoas, affiliateCommission, annualPricing, lifetimeVsSubscription, mrrGoal, aiApiCost, emailListGrowth, outsourceVsDiy, refundChargeback, sponsorshipCpm, pricingProfit, projectQuote, revenueGoal, churnStats, conversionRate, discountImpact, freelanceRate, hourlyToSalary, ltvCac, mrrProjection, netRevenueRetention, priceIncrease, referralLoop, runway, taxReserve } from './calculations.js?v=202610241';
+import { adRoas, affiliateCommission, annualPricing, lifetimeVsSubscription, mrrGoal, aiApiCost, emailListGrowth, outsourceVsDiy, refundChargeback, sponsorshipCpm, pricingProfit, projectQuote, revenueGoal, churnStats, conversionRate, discountImpact, freelanceRate, hourlyToSalary, ltvCac, mrrProjection, netRevenueRetention, priceIncrease, referralLoop, runway, taxReserve } from './calculations.js?v=202611041';
 import { escapeHtml, field, resultRow } from './calculator-ui.js?v=202610241';
 export function toNumber(value) {
     const parsed = Number(value);
@@ -31,11 +31,16 @@ export function ProfitCalculator({ locale, text, currency, values }) {
     const variableCost = values.variableCost ?? "0";
     const targetNet = values.targetNet ?? "25";
     const format = formatters(locale, currency);
-    const { profit, fees, threshold } = pricingProfit({
+    const { profit, fees, threshold, breakdown } = pricingProfit({
         price: toNumber(price), customers: toNumber(customers),
         feePercent: Math.min(100, toNumber(feePercent)), feeFixed: toNumber(feeFixed),
         costs: toNumber(costs), variableCost: toNumber(variableCost), targetNet: toNumber(targetNet),
     });
+    const minus = (value) => value > 0 ? `−${format.money(value)}` : format.money(0);
+    const group = (title, rows) => `<h3 class="tool-subhead">${escapeHtml(title)}</h3><dl class="tool-results">${rows}</dl>`;
+    const gap = breakdown.customersToBreakEven === null
+        ? text.results.notAvailable
+        : breakdown.customersToBreakEven === 0 ? text.results.alreadyProfitable : format.number(breakdown.customersToBreakEven);
     return { inputs: `<div class="tool-inputs">
       ${field({ id: "price", label: text.labels.price, value: price, name: "price" })}
       ${field({ id: "customers", label: text.labels.customers, value: customers, step: "1", name: "customers" })}
@@ -43,19 +48,28 @@ export function ProfitCalculator({ locale, text, currency, values }) {
       ${field({ id: "fee-fixed", label: text.labels.feeFixed, value: feeFixed, name: "feeFixed" })}
       ${field({ id: "costs", label: text.labels.costs, value: costs, name: "costs" })}
       ${field({ id: "variable-cost", label: text.labels.variableCost, value: variableCost, name: "variableCost" })}
-      ${field({ id: "target-net", label: text.labels.targetNet, value: targetNet, name: "targetNet" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${field({ id: "target-net", label: text.labels.targetNet, value: targetNet, name: "targetNet" })} </div>`, output: `${group(text.results.monthlyBreakdown, `
       ${resultRow({ label: text.results.revenue, value: format.money(profit.revenue) })}
-      ${resultRow({ label: text.results.fees, value: format.money(profit.fees) })}
+      ${resultRow({ label: text.results.percentFees, value: minus(breakdown.percentFees) })}
+      ${resultRow({ label: text.results.fixedFees, value: minus(breakdown.fixedFees) })}
       ${resultRow({ label: text.results.netRevenue, value: format.money(profit.netRevenue) })}
+      ${resultRow({ label: text.results.variableCosts, value: minus(breakdown.variableCosts) })}
+      ${resultRow({ label: text.results.operatingCosts, value: minus(breakdown.operatingCosts) })}
       ${resultRow({ id: "profit", label: text.results.profit, value: format.money(profit.profit), strong: true })}
       ${resultRow({ label: text.results.margin, value: format.percent(profit.margin) })}
+      ${resultRow({ label: text.results.annualProfit, value: format.money(breakdown.annualProfit) })}`)}
+${group(text.results.perSaleBreakdown, `
+      ${resultRow({ label: text.results.revenue, value: format.money(toNumber(price)) })}
+      ${resultRow({ label: text.results.fees, value: minus(fees.fees) })}
       ${resultRow({ id: "fees", label: text.results.netReceived, value: format.money(fees.net) })}
       ${resultRow({ label: text.results.effectiveRate, value: format.percent(fees.effectiveRate) })}
-      ${resultRow({ label: text.results.priceForTarget, value: fees.priceForTarget === null ? text.results.notAvailable : format.money(fees.priceForTarget) })}
+      ${resultRow({ label: text.results.priceForTarget, value: toNumber(targetNet) === 0 ? text.results.targetNotSet : fees.priceForTarget === null ? text.results.notAvailable : format.money(fees.priceForTarget) })}`)}
+${group(text.results.breakEvenAnalysis, `
       ${resultRow({ label: text.results.contribution, value: format.money(threshold.contribution) })}
       ${resultRow({ id: "break-even", label: text.results.units, value: threshold.units === null ? text.results.notAvailable : format.number(threshold.units), strong: true })}
+      ${resultRow({ label: text.results.customersToBreakEven, value: gap })}
       ${resultRow({ label: text.results.revenueNeeded, value: threshold.revenue === null ? text.results.notAvailable : format.money(threshold.revenue) })}
-      ${resultRow({ label: text.results.contributionMargin, value: format.percent(threshold.contributionMargin) })} </dl>
+      ${resultRow({ label: text.results.contributionMargin, value: format.percent(threshold.contributionMargin) })}`)}
 ${(threshold.units === null && `<p class="tool-warning" role="status">${escapeHtml(text.results.unreachable)}</p>` || "")}` };
 }
 export function MrrCalculator({ locale, text, currency, values }) {

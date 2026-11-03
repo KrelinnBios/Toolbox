@@ -52,15 +52,25 @@ export function isToolCurrency(value) {
 }
 export const MAX_PROJECTION_MONTHS = 60;
 export function pricingProfit(input) {
+    const feeFixed = input.price > 0 ? input.feeFixed : 0;
+    const variableCosts = input.variableCost * input.customers;
     const profit = saasProfit({
         ...input,
-        feeFixed: input.price > 0 ? input.feeFixed : 0,
-        costs: input.costs + input.variableCost * input.customers,
+        feeFixed,
+        costs: input.costs + variableCosts,
     });
     const fees = paymentFees(input);
     const perUnitFees = fees.fees;
     const threshold = breakEven({ fixedCosts: input.costs, price: input.price, variableCost: input.variableCost + perUnitFees });
-    return { profit, fees, threshold };
+    const breakdown = {
+        percentFees: profit.revenue * (input.feePercent / 100),
+        fixedFees: feeFixed * input.customers,
+        variableCosts,
+        operatingCosts: input.costs,
+        annualProfit: profit.profit * 12,
+        customersToBreakEven: threshold.units === null ? null : Math.max(0, Math.ceil(threshold.units - input.customers)),
+    };
+    return { profit, fees, threshold, breakdown };
 }
 export function projectQuote(input) {
     const base = input.hours * input.hourlyRate + input.extraCosts;

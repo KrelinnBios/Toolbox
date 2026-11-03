@@ -61,6 +61,8 @@
 .calculator-output-head h2 { margin: 0; font-size: 20px; }
 .calculator-output-head span { color: var(--muted); font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; font-size: 12px; font-weight: 700; }
 .tool-results { margin: 14px 0 0; }
+.tool-subhead { margin: 26px 0 0; padding-left: 10px; border-left: 4px solid var(--ink); font-size: 15px; }
+.tool-subhead + .tool-results { margin-top: 8px; }
 .tool-result { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 15px 12px; border-bottom: 1px solid #d9d7df; }
 .tool-result dt { min-width: 0; color: var(--muted); }
 .tool-result dd { margin: 0; text-align: right; overflow-wrap: anywhere; font-size: 18px; font-weight: 700; }
