@@ -57,7 +57,7 @@ const sourceSiteCategories = [
     items: [
       { name: "爱看机器人", url: "https://imoviebot.vip/", desc: "搜索电影、电视剧等影视资源。", group: "影视资源" },
       { name: "ZIP0", url: "https://zip0.com/?r=PFWHX7", desc: "影视聚合搜索与播放，支持选集和切换线路。", group: "影视资源" },
-      { name: "SyncTV", url: "https://docs.synctv.wiki/", desc: "SyncTV 多人同步观影工具的安装、部署与使用文档。", group: "同步观影" },
+      { name: "Syncwe", url: "https://syncwe.top/", desc: "跨设备同步观影，支持网盘、WebDAV、Emby、聊天和语音通话。", group: "同步观影" },
       { name: "GGemu", url: "https://ggemu.com/", desc: "提供复古游戏模拟器与相关游戏资源下载。", group: "游戏资源" },
       { name: "Steam Card Exchange", url: "https://www.steamcardexchange.net/", desc: "查询 Steam 集换式卡牌、徽章与资料背景。", group: "游戏资源" },
       { name: "怀旧游戏博物馆", url: "https://rgm.games/", desc: "保护、展示与在线体验经典电子游戏的非营利项目。", group: "游戏资源" },
