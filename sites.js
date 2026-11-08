@@ -136,6 +136,7 @@ const sourceSiteCategories = [
       { name: "Coolors", url: "https://coolors.co/", desc: "配色方案生成与调色板管理工具。", group: "效率工具" },
       { name: "VIA", url: "https://usevia.app/", desc: "配置兼容键盘的键位、宏与灯光。", group: "硬件配置" },
       { name: "AlternativeTo", url: "https://alternativeto.net/", desc: "按用户评价查找软件与服务的替代方案。", group: "软件导航" },
+      { name: "agent-qa", url: "https://www.vostride.com/", desc: "AI 驱动的网页与移动端自动化测试工具。", group: "开发工具" },
     ],
   },
   {
