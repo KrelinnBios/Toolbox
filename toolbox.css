@@ -134,21 +134,29 @@ svg { display: block; }
   margin: 0 4px 24px;
 }
 .tools-brand {
-  display: block;
+  display: inline-block;
   flex: none;
   color: var(--acid);
+}
+.tools-brand-copy {
+  display: block;
+  min-width: 0;
+}
+.tools-brand-name {
   font-size: 30px;
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
-.tools-brand span {
+.tools-brand-tagline {
   display: block;
-  margin-top: 8px;
+  margin-top: 5px;
   color: var(--sidebar-muted);
   font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
   font-size: 13px;
   font-weight: 400;
+  line-height: normal;
   letter-spacing: 0;
 }
 .tools-directory-label {
@@ -515,25 +523,29 @@ main {
   .tools-sidebar-head {
     align-items: center;
     justify-content: flex-start;
-    gap: 12px;
+    gap: 10px;
     margin: 0 16px 8px;
     cursor: default;
   }
   .tools-brand {
-    display: block;
+    display: inline-block;
     margin-right: auto;
     color: var(--ink);
-    font-size: 18px;
-    line-height: 1;
   }
-  .tools-brand span { display: none; }
+  .tools-brand-name {
+    font-size: 32px;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-shadow: 4px 4px 0 var(--acid);
+  }
+  .tools-brand-tagline { display: none; }
   .page-switch {
     border-color: var(--ink);
     background: var(--surface);
   }
   .page-switch a {
     min-height: 38px;
-    padding: 4px 11px;
+    padding: 4px 10px;
     color: var(--ink);
   }
   .page-switch a + a { border-left-color: var(--ink); }
@@ -636,6 +648,9 @@ main {
   .tools-tab { min-height: 42px; padding: 7px 10px; font-size: 14px; }
   .tools-section-title { font-size: 20px; }
   main { margin: 0 14px; }
+  .tools-brand-name { font-size: 24px; letter-spacing: 0.03em; text-shadow: 3px 3px 0 var(--acid); }
+  .tools-sidebar-head { gap: 8px; }
+  .page-switch a { padding: 4px 8px; }
 }
 
 @media (hover: none) and (pointer: coarse) {

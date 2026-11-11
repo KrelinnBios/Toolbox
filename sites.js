@@ -121,7 +121,7 @@ const sourceSiteCategories = [
       { name: "数字敦煌", url: "https://www.e-dunhuang.com/index.htm", desc: "敦煌石窟与壁画的数字化展示。", group: "历史文化" },
       { name: "FemRes", url: "https://www.femres.org/", desc: "女性主义书籍、影视、播客与学术资料索引。", group: "女性资料" },
       { name: "HerStory", url: "https://herstory.top/", desc: "女性人物故事与历史贡献资料。", group: "女性资料" },
-      { name: "Shape of World", url: "https://shapeof.world/", desc: "地理数据可视化与世界地图展示。", group: "科学可视化" },
+      { name: "Shape of World", url: "https://shapeof.world/", desc: "用可交互三维世界和短片，直观呈现科学、数学与经济原理。", group: "科学可视化" },
       { name: "Scale of Universe", url: "https://scaleofuniverse.com/zh", desc: "宇宙尺度可视化，从量子到星系。", group: "科学可视化" },
       { name: "100,000 Stars", url: "https://stars.chromeexperiments.com/", desc: "银河系星图 3D 可视化体验。", group: "科学可视化" },
     ],
@@ -199,6 +199,7 @@ const sourceSiteCategories = [
     items: [
       { name: "Dodo Payments", url: "https://app.dodopayments.com/", desc: "数字产品支付处理与订阅管理平台。", group: "支付服务" },
       { name: "PriceAI", url: "https://priceai.cc/", desc: "AI 低价卡网订阅与中转 API 比价雷达。", group: "比价导航" },
+      { name: "OpenPrice", url: "https://www.openprice.cc/", desc: "聚合 AI 订阅与卡网渠道报价的比价平台。", group: "比价导航" },
       { name: "WildAI", url: "https://bewild.ai/?code=JDYR4ATU", desc: "ChatGPT、Claude 与 X 等服务的订阅代购。", group: "订阅代购" },
       { name: "DaseinAI", url: "https://www.daseinai.xyz/register?aff=VWHM8SMXYMLH", desc: "AI 模型 API 接入与中转服务。", group: "API 中转" },
       { name: "菠萝AI商城", url: "https://mall.boluoai.shop/account.html?invite=E86Y857H", desc: "AI 订阅、Apple 礼品卡与账号等数字产品商城。", group: "订阅代购" },
