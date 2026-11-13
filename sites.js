@@ -150,6 +150,7 @@ const sourceSiteCategories = [
       { name: "二次元宝藏导航", url: "https://acg.baozangdh.com/", desc: "二次元资源导航。", group: "资源导航" },
       { name: "游戏宝藏导航", url: "https://game.baozangdh.com/", desc: "游戏资源导航。", group: "资源导航" },
       { name: "AI导航123", url: "https://aidh123.com/", desc: "人工智能工具与资源导航。", group: "资源导航" },
+      { name: "FollowAgents", url: "https://followagents.com/", desc: "AI Agents 目录与评测平台，提供多维度分析与筛选。", group: "资源导航" },
     ],
   },
   {
