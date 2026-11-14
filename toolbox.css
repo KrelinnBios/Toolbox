@@ -57,6 +57,74 @@
   background: var(--toolbox-scrollbar-thumb-hover) !important;
 }
 
+/* Brand-coloured page scrollbar; inner scroll areas keep their native styles. */
+html.toolbox-overlay-scrollbar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+}
+
+html.toolbox-overlay-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.toolbox-overlay-thumb {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 900;
+  width: 6px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--toolbox-scrollbar-thumb);
+  touch-action: none;
+}
+
+.toolbox-overlay-thumb:hover,
+.toolbox-overlay-thumb:active,
+.toolbox-overlay-thumb.is-dragging {
+  background: var(--toolbox-scrollbar-thumb-hover);
+}
+
+.toolbox-overlay-thumb:focus {
+  outline: none;
+}
+
+.toolbox-overlay-thumb:focus-visible {
+  outline: 2px solid var(--toolbox-scrollbar-thumb-hover);
+  outline-offset: 1px;
+}
+
+.toolbox-overlay-thumb[hidden] {
+  display: none !important;
+}
+
+@media print {
+  .toolbox-overlay-thumb {
+    display: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  html.toolbox-overlay-scrollbar {
+    scrollbar-width: thin !important;
+    scrollbar-color: CanvasText Canvas !important;
+  }
+
+  html.toolbox-overlay-scrollbar::-webkit-scrollbar {
+    display: block !important;
+    width: 6px !important;
+    height: 6px !important;
+  }
+
+  .toolbox-overlay-thumb {
+    display: none !important;
+  }
+}
+
 body {
   min-height: 100vh;
   margin: 0;
