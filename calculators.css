@@ -16,7 +16,7 @@
 }
 .calculator-intro { margin: 6px 0 0; color: var(--muted); line-height: 1.8; }
 .calculator-toolbar { padding: 22px 0 20px; }
-.calculator-load-warning { margin: 20px 0 0; padding: 18px 20px; background: #fff1e8; border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--red); font-family: Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+.calculator-load-warning { margin: 20px 0 0; padding: 18px 20px; background: #fff1e8; border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--red); font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; }
 .calculator-load-warning strong { display: block; font-size: 16px; }
 .calculator-load-warning p { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .calculator-load-warning a { color: var(--blue); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
@@ -35,7 +35,7 @@
   color: var(--ink);
   background: var(--acid);
   border: 2px solid var(--ink);
-  font-family: Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
   font-size: 12px;
   font-weight: 900;
   line-height: 1.2;
@@ -46,7 +46,7 @@
 .tools-section.category-growth { --card-shadow: var(--green); --card-active: #def3e6; }
 .tools-section.category-planning { --card-shadow: var(--orange); --card-active: #fff0dc; }
 .calculator-category { margin: 32px 0 12px; color: var(--blue); font-weight: 700; }
-#calculator-detail h1 { margin: 0; font: 900 clamp(28px, 3vw, 44px)/1.35 Inter, "Noto Sans SC", sans-serif; }
+#calculator-detail h1 { margin: 0; font: 900 clamp(28px, 3vw, 44px)/1.35 "Noto Sans SC", sans-serif; }
 .tool-card { margin-top: 28px; padding: 28px; border: 2px solid var(--ink); background: var(--surface); box-shadow: 6px 6px 0 var(--ink); }
 .tool-card-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 26px; }
 .tool-card-head h2 { margin: 0; font-size: 22px; }
@@ -59,7 +59,7 @@
 .tool-field input, .tool-field select { width: 100%; }
 .calculator-output-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-top: 30px; padding-top: 24px; border-top: 3px solid var(--ink); }
 .calculator-output-head h2 { margin: 0; font-size: 20px; }
-.calculator-output-head span { color: var(--muted); font-family: Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; font-size: 12px; font-weight: 700; }
+.calculator-output-head span { color: var(--muted); font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif; font-size: 12px; font-weight: 700; }
 .tool-results { margin: 14px 0 0; }
 .tool-subhead { margin: 26px 0 0; padding-left: 10px; border-left: 4px solid var(--ink); font-size: 15px; }
 .tool-subhead + .tool-results { margin-top: 8px; }
