@@ -53,6 +53,14 @@ const output = document.querySelector("#calculator-output");
 const currencySelect = document.querySelector("#tool-currency");
 const scenarioButtons = document.querySelector("#calculator-scenarios");
 const slug = new URLSearchParams(location.search).get("tool");
+const isTool = TOOL_SLUGS.includes(slug);
+const canonicalUrl = new URL("https://toolbox.krelinnbios.com/tools");
+if (isTool) canonicalUrl.searchParams.set("tool", slug);
+const canonical = document.createElement("link");
+canonical.rel = "canonical";
+canonical.href = canonicalUrl.href;
+document.head.append(canonical);
+document.querySelector('meta[property="og:url"]').content = canonicalUrl.href;
 const states = new Map();
 let currency = baseText.currency.defaultCurrency;
 let activeScenario;
@@ -255,12 +263,15 @@ window.addEventListener("hashchange", () => { if (!detail.hidden) selectScenario
 window.addEventListener("scroll", updateActiveCategoryFromScroll, { passive: true });
 window.addEventListener("resize", updateActiveCategoryFromScroll);
 
-if (TOOL_SLUGS.includes(slug)) {
+if (isTool) {
   catalog.hidden = true;
   detail.hidden = false;
   const tool = baseText.tools[slug];
   const category = toolCategoryOf(slug);
   document.title = `${tool.name} - Toolbox`;
+  document.querySelector('meta[name="description"]').content = tool.intro;
+  document.querySelector('meta[property="og:title"]').content = document.title;
+  document.querySelector('meta[property="og:description"]').content = tool.intro;
   document.querySelector("#calculator-title").textContent = tool.heading;
   document.querySelector("#calculator-intro").textContent = tool.intro;
   document.querySelector("#calculator-category").textContent = baseText.categories[category];

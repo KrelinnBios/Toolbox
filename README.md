@@ -28,6 +28,7 @@ Toolbox 是一个静态工具箱，包含资源导航和 23 个可直接使用�
 - 站点搜索：按站点名称、描述、域名或分类名称实时筛选，并显示匹配数量。
 - 目录联动：资源导航和在线工具页均支持点击目录跳转到对应分类，滚动页面时目录自动高亮当前分类。
 - 移动适配：窄屏下分类目录变为横向排列，站点卡片切换为单列显示。
+- 搜索引擎发现：提供站点地图、爬虫规则与规范网址，覆盖首页、工具目录及 23 个计算器。
 
 ## 界面预览
 
@@ -40,6 +41,24 @@ Toolbox 是一个静态工具箱，包含资源导航和 23 个可直接使用�
 访问 <https://toolbox.krelinnbios.com>，可搜索站点或按分类浏览。在线计算器位于 [工具页面](https://toolbox.krelinnbios.com/tools.html)，支持部分计算场景切换；货币切换只改变金额标识，不进行汇率换算。
 
 本地预览需通过 HTTP 服务打开 `index.html` 或 `tools.html`，无需安装 npm 依赖或构建。计算测试需 Node.js 24 或更高版本，运行 `node --test test/calculations.test.mjs`。
+
+### 提交 Google 搜索
+
+1. 部署后，确认 `https://toolbox.krelinnbios.com/sitemap.xml` 返回 XML，`https://toolbox.krelinnbios.com/robots.txt` 包含站点地图地址。
+2. 在 [Google Search Console](https://search.google.com/search-console/) 添加站点并完成所有权验证；可使用网域资源，通过 DNS TXT 记录验证。
+3. 在「站点地图」中提交 `https://toolbox.krelinnbios.com/sitemap.xml`。
+4. 使用「网址检查」检查首页和重要工具网址，执行实时测试并请求编入索引，随后查看收录状态。
+
+站点地图帮助发现页面，不保证收录或排名。Cloudflare Pages 会将 `/tools.html` 重定向至 `/tools`，因此站点地图和 canonical 使用不带扩展名的线上网址。计算器由 JavaScript 渲染，在 Search Console 中应检查渲染后的内容；各计算器的 canonical 保留有效的 `tool` 参数，去掉场景锚点和其他参数。新增、删除或改名工具时，同步维护 `sitemap.xml`；更换域名时，同步更新站点地图、`robots.txt` 及 HTML/JS 中的规范网址。
+
+## 项目结构
+
+- `index.html`、`toolbox.css`、`toolbox.js`、`sites.js`：资源导航页面、样式、交互与站点数据。
+- `tools.html`、`calculators.css`、`calculators.js`：在线工具目录与计算器入口。
+- `calculations.js`、`calculator-views.js`、`calculator-copy.js`、`calculator-ui.js`：计算公式、场景视图、中文文案及表单与结果渲染。
+- `scrollbar.js`、`favicon.svg`：移动端浮层滚动条与站点图标。
+- `sitemap.xml`、`robots.txt`：搜索引擎站点地图与爬虫规则。
+- `test/`、`screenshots/`、`docs/agent/`：计算回归测试、界面截图与项目维护规范。
 
 ## 隐私与数据
 
