@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, follow">
+    <meta name="theme-color" content="#eeff41">
+    <title>Toolbox - 页面未找到</title>
+    <link rel="icon" href="/favicon.svg?v=2026102510">
+    <link rel="stylesheet" href="/toolbox.css?v=202611153">
+    <script src="/scrollbar.js?v=202611151" defer></script>
+    <script
+      defer
+      src="https://vibecafe.ai/telemetry/v1.js"
+      data-vc-product-id="cmuh8urlx00000agmjso6gzh7"
+      data-vc-auth-key="vc_web_frSn6eeP05UN0qcg7d62ukzJzH97w32iD9TBi4eEKtY"
+    ></script>
+    <style>
+      .not-found {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 24px;
+        min-height: 100vh;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 48px 24px;
+      }
+      .not-found-code {
+        margin: 0;
+        font-size: clamp(64px, 16vw, 120px);
+        font-weight: 900;
+        line-height: 1;
+        text-shadow: 5px 5px 0 var(--acid);
+      }
+      .not-found-message {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .not-found-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+      .not-found-actions a {
+        padding: 12px 18px;
+        background: var(--surface);
+        border: 2px solid var(--ink);
+        box-shadow: 3px 3px 0 var(--ink);
+        font-weight: 700;
+      }
+      .not-found-actions a:first-child,
+      .not-found-actions a:hover { background: var(--acid); }
+    </style>
+  </head>
+  <body>
+    <main class="not-found" aria-labelledby="not-found-title">
+      <p class="not-found-code">404</p>
+      <div class="tools-heading"><h1 id="not-found-title">页面未找到</h1></div>
+      <p class="not-found-message">这个网址可能已失效，或页面已经移动。你可以返回资源导航，或前往在线工具继续浏览。</p>
+      <nav class="not-found-actions" aria-label="返回可用页面">
+        <a href="/">返回资源导航</a>
+        <a href="/tools">前往在线工具</a>
+      </nav>
+    </main>
+  </body>
+</html>
