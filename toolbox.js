@@ -7,6 +7,10 @@ const toolsTotal = document.querySelector("#tools-total");
 let searchQuery = "";
 let scrollSpyLock = false;
 let scrollSpyFrame = 0;
+let scrollSpyUnlockTimer = 0;
+let activeTab = null;
+let sectionEntries = [];
+const tabsByCategory = new Map();
 function escapeHtml(value) {
   const element = document.createElement("span");
   element.textContent = value;
@@ -21,12 +25,6 @@ function hostOf(url) {
   }
 }
 
-function matchesQuery(item, category, query) {
-  if (!query) return true;
-  const haystack = `${hostOf(item.url)} ${item.name} ${item.desc} ${category.label}`.toLowerCase();
-  return haystack.includes(query.toLowerCase());
-}
-
 const itemNameCollator = new Intl.Collator("zh-Hans-CN", {
   numeric: true,
   sensitivity: "base",
@@ -34,27 +32,29 @@ const itemNameCollator = new Intl.Collator("zh-Hans-CN", {
 
 function groupedItems(category) {
   const groups = new Map();
-  const groupOrder = new Map();
-  category.items.forEach((item, index) => {
+  category.items.forEach((item) => {
     const group = item.group || "其他";
-    if (!groupOrder.has(group)) groupOrder.set(group, index);
+    if (!groups.has(group)) groups.set(group, []);
+    groups.get(group).push(item);
   });
 
-  category.items
-    .filter((item) => matchesQuery(item, category, searchQuery))
-    .forEach((item) => {
-      const group = item.group || "其他";
-      if (!groups.has(group)) groups.set(group, []);
-      groups.get(group).push(item);
-    });
-
-  return [...groups.entries()]
-    .sort(([groupA], [groupB]) => groupOrder.get(groupA) - groupOrder.get(groupB))
-    .map(([group, items]) => [
-      group,
-      items.sort((itemA, itemB) => itemNameCollator.compare(itemA.name, itemB.name)),
-    ]);
+  return [...groups.values()].flatMap((items) =>
+    items.sort((itemA, itemB) => itemNameCollator.compare(itemA.name, itemB.name)),
+  );
 }
+
+// 数据不随搜索变化：分组、排序、域名解析和搜索文本只准备一次。
+const categoryData = siteCategories.map((category) => ({
+  ...category,
+  items: groupedItems(category).map((item) => {
+    const host = hostOf(item.url);
+    return {
+      ...item,
+      host,
+      searchText: `${host} ${item.name} ${item.desc} ${category.label}`.toLowerCase(),
+    };
+  }),
+}));
 
 function renderTabs() {
   const categories = [...siteCategories];
@@ -71,28 +71,19 @@ function renderTabs() {
       .join("")}
   `;
   toolsTabs.innerHTML = tabsHTML;
+  toolsTabs.querySelectorAll(".tools-tab").forEach((tab) => {
+    tabsByCategory.set(tab.dataset.category, tab);
+  });
 }
 
 function renderSections() {
-  const visibleCategories = siteCategories.filter((category) =>
-    category.items.some((item) => matchesQuery(item, category, searchQuery)),
-  );
-
-  const total = visibleCategories.reduce((sum, category) => {
-    return sum + category.items.filter((item) => matchesQuery(item, category, searchQuery)).length;
-  }, 0);
-
-  toolsTotal.textContent = `共 ${total} 个站点`;
-  toolsEmpty.hidden = total !== 0;
-
-  toolsSections.innerHTML = visibleCategories
-    .map((category) => {
-      const groups = groupedItems(category);
-      const items = groups.flatMap(([, groupItems]) => groupItems);
+  toolsSections.innerHTML = categoryData
+    .map((category, index) => {
+      const items = category.items;
       return `
       <section class="tools-section category-${escapeHtml(category.id)}" data-category="${escapeHtml(category.id)}" aria-labelledby="title-${escapeHtml(category.id)}">
         <div class="tools-section-head">
-          <span class="tools-section-number" aria-hidden="true">${String(siteCategories.indexOf(category) + 1).padStart(2, "0")}</span>
+          <span class="tools-section-number" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
           <h2 class="tools-section-title" id="title-${escapeHtml(category.id)}">${escapeHtml(category.label)}</h2>
           <span class="tools-section-count">${items.length} 个站点</span>
         </div>
@@ -103,12 +94,12 @@ function renderSections() {
             <a class="tools-card" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">
               <span class="tools-card-icon" aria-hidden="true">
                 <span>${escapeHtml(Array.from(item.name)[0].toUpperCase())}</span>
-                <img src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(hostOf(item.url))}&amp;sz=32" width="20" height="20" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+                <img src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(item.host)}&amp;sz=32" width="20" height="20" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
               </span>
               <span class="tools-card-copy">
                 <span class="tools-card-name">${escapeHtml(item.name)}</span>
                 <span class="tools-card-desc">${escapeHtml(item.desc)}</span>
-                <span class="tools-card-host">${escapeHtml(hostOf(item.url).replace(/^www\./, ""))}</span>
+                <span class="tools-card-host">${escapeHtml(item.host.replace(/^www\./, ""))}</span>
               </span>
             </a>
           `,
@@ -120,25 +111,59 @@ function renderSections() {
     })
     .join("");
 
+  sectionEntries = [...toolsSections.querySelectorAll(".tools-section")].map((section, index) => ({
+    section,
+    count: section.querySelector(".tools-section-count"),
+    items: [...section.querySelectorAll(".tools-card")].map((card, itemIndex) => ({
+      card,
+      searchText: categoryData[index].items[itemIndex].searchText,
+    })),
+  }));
 }
 
 function update() {
-  toolsTabs.querySelectorAll(".tools-tab").forEach((tab) => {
-    const isActive = tab.dataset.category === "all";
-    tab.classList.toggle("is-active", isActive);
-    tab.setAttribute("aria-pressed", String(isActive));
+  let total = 0;
+  sectionEntries.forEach(({ section, count, items }) => {
+    let visibleCount = 0;
+    items.forEach(({ card, searchText }) => {
+      const hidden = !searchText.includes(searchQuery);
+      if (card.hidden !== hidden) card.hidden = hidden;
+      if (!hidden) visibleCount++;
+    });
+    const hidden = visibleCount === 0;
+    if (section.hidden !== hidden) section.hidden = hidden;
+    const countText = `${visibleCount} 个站点`;
+    if (count.textContent !== countText) count.textContent = countText;
+    total += visibleCount;
   });
-  renderSections();
+  const totalText = `共 ${total} 个站点`;
+  if (toolsTotal.textContent !== totalText) toolsTotal.textContent = totalText;
+  toolsEmpty.hidden = total !== 0;
   updateActiveCategoryFromScroll();
 }
 
-function setActiveTab(activeTab) {
-  toolsTabs.querySelectorAll(".tools-tab").forEach((tab) => {
-    const isActive = tab === activeTab;
-    tab.classList.toggle("is-active", isActive);
-    tab.setAttribute("aria-pressed", String(isActive));
-  });
-  if (activeTab) activeTab.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+function setActiveTab(nextTab) {
+  if (activeTab === nextTab) return;
+  if (activeTab) {
+    activeTab.classList.remove("is-active");
+    activeTab.setAttribute("aria-pressed", "false");
+  }
+  activeTab = nextTab;
+  if (activeTab) {
+    activeTab.classList.add("is-active");
+    activeTab.setAttribute("aria-pressed", "true");
+  }
+  if (!activeTab) return;
+  if (window.matchMedia("(max-width: 800px)").matches) {
+    // 只滚动横向目录，避免 scrollIntoView 打断页面正在进行的平滑滚动。
+    const bounds = toolsTabs.getBoundingClientRect();
+    const tabBounds = activeTab.getBoundingClientRect();
+    const offset = tabBounds.left < bounds.left ? tabBounds.left - bounds.left
+      : tabBounds.right > bounds.right ? tabBounds.right - bounds.right : 0;
+    if (offset) toolsTabs.scrollBy({ left: offset, behavior: "smooth" });
+  } else {
+    activeTab.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+  }
 }
 
 function updateActiveCategoryFromScroll() {
@@ -147,24 +172,19 @@ function updateActiveCategoryFromScroll() {
     scrollSpyFrame = 0;
     if (scrollSpyLock || searchQuery) return;
 
-    const sections = [...toolsSections.querySelectorAll(".tools-section")];
     const triggerY = window.innerHeight * 2 / 5;
     const reachedBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
     let current = null;
     if (reachedBottom) {
-      current = sections.at(-1) || null;
+      current = sectionEntries.at(-1)?.section || null;
     } else {
-      sections.forEach((section) => {
-        const top = section.getBoundingClientRect().top;
-        if (top > 0 && top <= triggerY) current = section;
-      });
+      for (const { section } of sectionEntries) {
+        if (section.getBoundingClientRect().top > triggerY) break;
+        current = section;
+      }
     }
 
-    if (current) {
-      setActiveTab(toolsTabs.querySelector(`.tools-tab[data-category="${CSS.escape(current.dataset.category)}"]`));
-    } else if (sections[0] && sections[0].getBoundingClientRect().top > triggerY) {
-      setActiveTab(toolsTabs.querySelector('.tools-tab[data-category="all"]'));
-    }
+    setActiveTab(current ? tabsByCategory.get(current.dataset.category) : null);
   });
 }
 
@@ -174,29 +194,28 @@ toolsTabs.addEventListener("click", (event) => {
   if (searchQuery) {
     searchQuery = "";
     siteSearch.value = "";
-    renderSections();
-  }
-  if (tab.dataset.category === "all") {
-    scrollSpyLock = true;
-    setActiveTab(tab);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    window.setTimeout(() => { scrollSpyLock = false; }, 800);
-    return;
+    update();
   }
 
-  const section = toolsSections.querySelector(`.tools-section[data-category="${CSS.escape(tab.dataset.category)}"]`);
+  const section = sectionEntries.find(({ section }) => section.dataset.category === tab.dataset.category)?.section;
   if (!section) return;
   scrollSpyLock = true;
   setActiveTab(tab);
   const targetTop = section.getBoundingClientRect().top + window.scrollY
     - Math.min(window.innerHeight * 2 / 5, 220) - 12;
   window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
-  window.setTimeout(() => { scrollSpyLock = false; }, 800);
+  window.clearTimeout(scrollSpyUnlockTimer);
+  scrollSpyUnlockTimer = window.setTimeout(() => {
+    scrollSpyLock = false;
+    updateActiveCategoryFromScroll();
+  }, 800);
 });
 
 siteSearch.addEventListener("input", (event) => {
-  searchQuery = event.target.value.trim();
-  setActiveTab(toolsTabs.querySelector('.tools-tab[data-category="all"]'));
+  const nextQuery = event.target.value.trim().toLowerCase();
+  if (searchQuery === nextQuery) return;
+  searchQuery = nextQuery;
+  setActiveTab(null);
   update();
 });
 
@@ -220,4 +239,5 @@ toolsSections.addEventListener("error", (event) => {
 }, true);
 
 renderTabs();
+renderSections();
 update();

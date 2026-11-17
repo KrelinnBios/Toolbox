@@ -1,9 +1,13 @@
 import { TOOL_SLUGS, TOOL_CATEGORIES, TOOL_CURRENCIES, isToolCurrency, toolCategoryOf, tieredPricing, subscriptionCosts } from "./calculations.js?v=202611041";
 import { toolsCopyZh as baseText } from "./calculator-copy.js?v=202611042";
 import { escapeHtml, field, resultRow } from "./calculator-ui.js?v=202610241";
-import * as views from "./calculator-views.js?v=202611042";
 
-const calculators = {
+const slug = new URLSearchParams(location.search).get("tool");
+const isTool = TOOL_SLUGS.includes(slug);
+// 工具目录无需加载计算器视图；仅详情页下载并初始化。
+const views = isTool ? await import("./calculator-views.js?v=202611042") : null;
+
+const calculators = isTool ? {
   "pricing-profit-calculator": views.ProfitCalculator,
   "mrr-calculator": views.MrrCalculator,
   "ltv-cac-calculator": views.LtvCacCalculator,
@@ -25,13 +29,13 @@ const calculators = {
   "mrr-goal-calculator": views.MrrGoalCalculator,
   "tiered-pricing-calculator": renderTiers,
   "subscription-cost-calculator": renderSubscriptions,
-};
+} : {};
 const CATEGORY_TAGS = {
   revenue: "定价",
   growth: "增长",
   planning: "规划",
 };
-const scenarios = {
+const scenarios = isTool ? {
   "pricing-adjustment-calculator": [
     { id: "annual", render: views.AnnualPricingCalculator },
     { id: "discount", render: views.DiscountImpactCalculator },
@@ -42,7 +46,7 @@ const scenarios = {
     { id: "salary", render: views.HourlyToSalaryCalculator },
     { id: "project", render: views.ProjectQuoteCalculator },
   ],
-};
+} : {};
 const catalog = document.querySelector("#calculator-catalog");
 const detail = document.querySelector("#calculator-detail");
 const sections = document.querySelector("#calculator-sections");
@@ -52,8 +56,6 @@ const form = document.querySelector("#calculator-form");
 const output = document.querySelector("#calculator-output");
 const currencySelect = document.querySelector("#tool-currency");
 const scenarioButtons = document.querySelector("#calculator-scenarios");
-const slug = new URLSearchParams(location.search).get("tool");
-const isTool = TOOL_SLUGS.includes(slug);
 const canonicalUrl = new URL("https://toolbox.krelinnbios.com/tools");
 if (isTool) canonicalUrl.searchParams.set("tool", slug);
 const canonical = document.createElement("link");
