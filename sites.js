@@ -36,7 +36,6 @@ const sourceSiteCategories = [
       { name: "PdfZap", url: "https://pdfzap.toolooz.com/", desc: "免费在线批量压缩 PDF 文件，全程本地处理以保护隐私。", group: "格式转换" },
       { name: "FreeCompress", url: "https://freecompress.com/zh-cn", desc: "在线压缩图片、视频、音频与文档。", group: "格式转换" },
       { name: "HexEd.it", url: "https://hexed.it/", desc: "在浏览器中查看和编辑文件的十六进制数据。", group: "文件分析" },
-      { name: "AB Download Manager", url: "https://abdownloadmanager.com/", desc: "开源多线程下载管理器，支持浏览器集成。", group: "下载工具" },
       { name: "Code Beautify", url: "https://codebeautify.org/", desc: "代码格式化、压缩、转换与验证工具。", group: "开发工具" },
       { name: "Unicode 文本转换器", url: "https://qaz.wtf/u/convert.cgi?", desc: "将字母与数字转成可复制的 Unicode 花体字符。", group: "文本处理" },
       { name: "在线工具大全", url: "https://www.lddgo.net/", desc: "提供网络请求、加密解密与正则表达式等在线工具。", group: "通用工具" },
@@ -55,14 +54,13 @@ const sourceSiteCategories = [
     id: "entertainment",
     label: "影音娱乐",
     items: [
+      { name: "樱之空动漫基地", url: "https://www.skr3.cc/", desc: "番剧与动漫在线播放网站。", group: "动漫资源" },
       { name: "爱看机器人", url: "https://imoviebot.vip/", desc: "搜索电影、电视剧等影视资源。", group: "影视资源" },
       { name: "ZIP0", url: "https://zip0.com/?r=PFWHX7", desc: "影视聚合搜索与播放，支持选集和切换线路。", group: "影视资源" },
       { name: "星靛同屏", url: "https://www.niknight.cn/", desc: "异地同步观影，支持私密房间、实时聊天与弹幕。", group: "同步观影" },
       { name: "异起看", url: "https://yiqikan.club/", desc: "异地同步观影与实时语音连麦，房主控播、成员实时跟播。", group: "同步观影" },
-      { name: "GGemu", url: "https://ggemu.com/", desc: "提供复古游戏模拟器与相关游戏资源下载。", group: "游戏资源" },
       { name: "Steam Card Exchange", url: "https://www.steamcardexchange.net/", desc: "查询 Steam 集换式卡牌、徽章与资料背景。", group: "游戏资源" },
       { name: "怀旧游戏博物馆", url: "https://rgm.games/", desc: "保护、展示与在线体验经典电子游戏的非营利项目。", group: "游戏资源" },
-      { name: "Fuun", url: "https://fuun.fun/", desc: "在线小游戏与互动体验平台。", group: "游戏资源" },
       { name: "Radio Garden", url: "https://radio.garden/", desc: "在地球仪上收听全球各地的电台。", group: "音乐收听" },
       { name: "Tunefind", url: "https://www.tunefind.com/", desc: "查询电影、电视剧和游戏中出现的歌曲与配乐。", group: "音乐查询" },
       { name: "AHA Music", url: "https://aha-music.com/", desc: "识别歌曲并搜索音乐信息。", group: "音乐查询" },
@@ -72,7 +70,6 @@ const sourceSiteCategories = [
     id: "ebooks",
     label: "电子书籍",
     items: [
-      { name: "鸠摩搜书", url: "https://jiumo-diary.com/", desc: "电子书搜索与阅读资源检索平台。", group: "电子书库" },
       { name: "书格", url: "https://www.shuge.org/", desc: "古籍、书画与历史文献的数字化影像。", group: "古籍文献" },
       { name: "识典古籍", url: "https://www.shidianguji.com/", desc: "古籍 OCR 识别与全文检索平台。", group: "古籍文献" },
       { name: "中国哲学书电子化计划", url: "https://ctext.org/zhs", desc: "先秦两汉文献全文数据库。", group: "古籍文献" },
@@ -107,7 +104,6 @@ const sourceSiteCategories = [
       { name: "MuscleWiki", url: "https://musclewiki.com/zh-cn", desc: "按肌肉部位查询健身动作与演示。", group: "健身资料" },
       { name: "PrismSelf", url: "https://prismself.vip/", desc: "性别、心理与人际关系主题的中文知识库。", group: "心理与性别" },
       { name: "SaDuck", url: "https://saduck.top/", desc: "公务员考试知识库、考点解析与备考工具。", group: "考试资料" },
-      { name: "LLM Live Rankings", url: "https://rank.svenrogue.top/", desc: "全球大模型实时热度排行榜。", group: "AI 榜单" },
     ],
   },
   {
@@ -138,6 +134,7 @@ const sourceSiteCategories = [
       { name: "VIA", url: "https://usevia.app/", desc: "配置兼容键盘的键位、宏与灯光。", group: "硬件配置" },
       { name: "AlternativeTo", url: "https://alternativeto.net/", desc: "按用户评价查找软件与服务的替代方案。", group: "软件导航" },
       { name: "agent-qa", url: "https://www.vostride.com/", desc: "AI 驱动的网页与移动端自动化测试工具。", group: "开发工具" },
+      { name: "FollowAgents", url: "https://followagents.com/", desc: "AI Agents 目录与评测平台，提供多维度分析与筛选。", group: "开发工具" },
     ],
   },
   {
@@ -150,7 +147,7 @@ const sourceSiteCategories = [
       { name: "二次元宝藏导航", url: "https://acg.baozangdh.com/", desc: "二次元资源导航。", group: "资源导航" },
       { name: "游戏宝藏导航", url: "https://game.baozangdh.com/", desc: "游戏资源导航。", group: "资源导航" },
       { name: "AI导航123", url: "https://aidh123.com/", desc: "人工智能工具与资源导航。", group: "资源导航" },
-      { name: "FollowAgents", url: "https://followagents.com/", desc: "AI Agents 目录与评测平台，提供多维度分析与筛选。", group: "资源导航" },
+      { name: "Fuun", url: "https://fuun.fun/", desc: "奇趣网站收藏家，汇集有趣的小游戏与互动体验网站。", group: "趣味导航" },
     ],
   },
   {
@@ -198,7 +195,6 @@ const sourceSiteCategories = [
     id: "subscriptions",
     label: "订阅服务",
     items: [
-      { name: "Dodo Payments", url: "https://app.dodopayments.com/", desc: "数字产品支付处理与订阅管理平台。", group: "支付服务" },
       { name: "PriceAI", url: "https://priceai.cc/", desc: "AI 低价卡网订阅与中转 API 比价雷达。", group: "比价导航" },
       { name: "OpenPrice", url: "https://www.openprice.cc/", desc: "聚合 AI 订阅与卡网渠道报价的比价平台。", group: "比价导航" },
       { name: "WildAI", url: "https://bewild.ai/?code=JDYR4ATU", desc: "ChatGPT、Claude 与 X 等服务的订阅代购。", group: "订阅代购" },
