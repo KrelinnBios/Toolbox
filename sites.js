@@ -197,7 +197,6 @@ const sourceSiteCategories = [
     items: [
       { name: "PriceAI", url: "https://priceai.cc/", desc: "AI 低价卡网订阅与中转 API 比价雷达。", group: "比价导航" },
       { name: "OpenPrice", url: "https://www.openprice.cc/", desc: "聚合 AI 订阅与卡网渠道报价的比价平台。", group: "比价导航" },
-      { name: "WildAI", url: "https://bewild.ai/?code=JDYR4ATU", desc: "ChatGPT、Claude 与 X 等服务的订阅代购。", group: "订阅代购" },
       { name: "DaseinAI", url: "https://www.daseinai.xyz/register?aff=VWHM8SMXYMLH", desc: "AI 模型 API 接入与中转服务。", group: "API 中转" },
       { name: "菠萝AI商城", url: "https://mall.boluoai.shop/account.html?invite=E86Y857H", desc: "AI 订阅、Apple 礼品卡与账号等数字产品商城。", group: "订阅代购" },
       { name: "大象网络", url: "https://dx.elphantroute.com/app#/register?code=n5KEb6em", desc: "提供网络代理订阅服务。", group: "网络订阅" },
