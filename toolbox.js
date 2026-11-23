@@ -30,6 +30,11 @@ const itemNameCollator = new Intl.Collator("zh-Hans-CN", {
   sensitivity: "base",
 });
 
+// 与 PrismSelf 首页保持一致：用户偏好减弱动态效果时瞬时定位，否则平滑滚动。
+function scrollBehavior() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+}
+
 function groupedItems(category) {
   const groups = new Map();
   category.items.forEach((item) => {
@@ -160,9 +165,9 @@ function setActiveTab(nextTab) {
     const tabBounds = activeTab.getBoundingClientRect();
     const offset = tabBounds.left < bounds.left ? tabBounds.left - bounds.left
       : tabBounds.right > bounds.right ? tabBounds.right - bounds.right : 0;
-    if (offset) toolsTabs.scrollBy({ left: offset, behavior: "smooth" });
+    if (offset) toolsTabs.scrollBy({ left: offset, behavior: scrollBehavior() });
   } else {
-    activeTab.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+    activeTab.scrollIntoView({ block: "nearest", inline: "nearest", behavior: scrollBehavior() });
   }
 }
 
@@ -172,7 +177,11 @@ function updateActiveCategoryFromScroll() {
     scrollSpyFrame = 0;
     if (scrollSpyLock || searchQuery) return;
 
-    const triggerY = window.innerHeight * 2 / 5;
+    // 触发线与点击定位共用同一组常量，与 PrismSelf 首页保持一致。
+    const sidebarEl = document.querySelector(".tools-sidebar");
+    const isMobileBar = window.matchMedia("(max-width: 800px)").matches;
+    const stickyH = isMobileBar && sidebarEl ? sidebarEl.offsetHeight : 0;
+    const triggerY = Math.min(window.innerHeight * 2 / 5, 220) + stickyH + 12;
     const reachedBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
     let current = null;
     if (reachedBottom) {
@@ -199,16 +208,34 @@ toolsTabs.addEventListener("click", (event) => {
 
   const section = sectionEntries.find(({ section }) => section.dataset.category === tab.dataset.category)?.section;
   if (!section) return;
+
+  // 与 PrismSelf 首页一致：再次点击已激活的分类即取消定位并回到页顶。
+  if (activeTab === tab) {
+    setActiveTab(null);
+    window.scrollTo({ top: 0, behavior: scrollBehavior() });
+    return;
+  }
+
+  const sidebarEl = document.querySelector(".tools-sidebar");
+  const isMobileBar = window.matchMedia("(max-width: 800px)").matches;
+  const stickyH = isMobileBar && sidebarEl ? sidebarEl.offsetHeight : 0;
   scrollSpyLock = true;
   setActiveTab(tab);
   const targetTop = section.getBoundingClientRect().top + window.scrollY
-    - Math.min(window.innerHeight * 2 / 5, 220) - 12;
-  window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+    - Math.min(window.innerHeight * 2 / 5, 220) - stickyH - 12;
+  window.scrollTo({ top: Math.max(0, targetTop), behavior: scrollBehavior() });
   window.clearTimeout(scrollSpyUnlockTimer);
   scrollSpyUnlockTimer = window.setTimeout(() => {
     scrollSpyLock = false;
     updateActiveCategoryFromScroll();
   }, 800);
+});
+
+siteSearch.addEventListener("keyup", (event) => {
+  if (event.key !== "Escape") return;
+  siteSearch.value = "";
+  searchQuery = "";
+  update();
 });
 
 siteSearch.addEventListener("input", (event) => {
