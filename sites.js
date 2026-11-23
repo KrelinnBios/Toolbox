@@ -169,7 +169,7 @@ const sourceSiteCategories = [
       { name: "NeoDB", url: "https://neodb.social/", desc: "记录和分享图书、影视、音乐与游戏。", group: "影音记录" },
       { name: "Bangumi", url: "https://bgm.tv/", desc: "记录和查询动画、游戏、音乐与图书内容。", group: "影音记录" },
       { name: "FlowUs", url: "https://flowus.cn/", desc: "整理笔记、文档、项目与个人知识内容。", group: "知识管理" },
-      { name: "VibeCafé", url: "https://vibecafe.ai/", desc: "交流 AI 编程、作品展示与相关资源的社区。", group: "技术社区" },
+      { name: "VibeFriends", url: "https://vibefriends.com/", desc: "由 VibeCafé 迁移升级的社区，交流 AI 编程、作品展示与相关资源。", group: "技术社区" },
       { name: "Agili 的 Hacker Podcast", url: "https://hacker-podcast.agi.li/", desc: "科技新闻与 Hacker News 话题播客。", group: "技术社区" },
     ],
   },
