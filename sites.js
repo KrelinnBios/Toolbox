@@ -101,6 +101,7 @@ const sourceSiteCategories = [
       { name: "wikiHow", url: "https://www.wikihow.com/Main-Page", desc: "图文步骤式的生活与技能操作指南。", group: "生活指南" },
       { name: "Avibase", url: "https://avibase.bsc-eoc.org/avibase.jsp", desc: "全球鸟类物种数据库与分布信息。", group: "专业资料" },
       { name: "Funes", url: "https://funes.world/", desc: "科幻与奇幻作品信息库。", group: "专业资料" },
+      { name: "World Monitor", url: "https://www.worldmonitor.app/", desc: "聚合实时新闻、冲突事件与全球数据的免费地缘政治情报仪表板。", group: "专业资料" },
       { name: "MuscleWiki", url: "https://musclewiki.com/zh-cn", desc: "按肌肉部位查询健身动作与演示。", group: "健身资料" },
       { name: "PrismSelf", url: "https://prismself.vip/", desc: "性别、心理与人际关系主题的中文知识库。", group: "心理与性别" },
       { name: "SaDuck", url: "https://saduck.top/", desc: "公务员考试知识库、考点解析与备考工具。", group: "考试资料" },
