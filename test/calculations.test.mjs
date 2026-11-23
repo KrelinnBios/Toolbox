@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { adRoas, affiliateCommission, lifetimeVsSubscription, mrrGoal, emailListGrowth, outsourceVsDiy, refundChargeback, sponsorshipCpm, tieredPricing, aiApiCost, pricingProfit, projectQuote, revenueGoal, subscriptionCosts, annualPricing, breakEven, churnStats, conversionRate, discountImpact, freelanceRate, hourlyToSalary, isToolSlug, ltvCac, mrrProjection, netRevenueRetention, paymentFees, priceIncrease, referralLoop, runway, saasProfit, taxReserve, TOOL_CATEGORIES, TOOL_CURRENCIES, TOOL_SLUGS, toolCategoryOf, } from "../calculations.js";
+import { adRoas, affiliateCommission, lifetimeVsSubscription, mrrGoal, emailListGrowth, outsourceVsDiy, refundChargeback, sponsorshipCpm, tieredPricing, aiApiCost, pricingProfit, projectQuote, revenueGoal, subscriptionCosts, annualPricing, breakEven, churnStats, conversionRate, discountImpact, freelanceRate, hourlyToSalary, isToolSlug, ltvCac, mrrProjection, netRevenueRetention, paymentFees, priceIncrease, referralLoop, runway, saasProfit, taxReserve, loanPayment, compoundSavings, bmi, dailyCalorie, dateDifference, overtimePay, meetingCost, videoRevenue, fanGrowth, engagementRate, cashflowProjection, growthRateConvert, TOOL_CATEGORIES, TOOL_CURRENCIES, TOOL_SLUGS, toolCategoryOf, } from "../calculations.js";
 import { toolsCopyZh } from "../calculator-copy.js";
 const toolsCopy = { zh: toolsCopyZh };
 describe("免费工具计算", () => {
@@ -230,10 +230,22 @@ describe("免费工具计算", () => {
         assert.strictEqual(toolCategoryOf("lifetime-vs-subscription-calculator"), "revenue");
         assert.strictEqual(toolCategoryOf("affiliate-commission-calculator"), "growth");
         assert.strictEqual(toolCategoryOf("mrr-goal-calculator"), "growth");
+        assert.strictEqual(toolCategoryOf("growth-rate-calculator"), "growth");
+        assert.strictEqual(toolCategoryOf("cashflow-projection-calculator"), "planning");
+        assert.strictEqual(toolCategoryOf("loan-payment-calculator"), "life");
+        assert.strictEqual(toolCategoryOf("compound-savings-calculator"), "life");
+        assert.strictEqual(toolCategoryOf("bmi-calculator"), "life");
+        assert.strictEqual(toolCategoryOf("daily-calorie-calculator"), "life");
+        assert.strictEqual(toolCategoryOf("date-difference-calculator"), "time");
+        assert.strictEqual(toolCategoryOf("overtime-pay-calculator"), "time");
+        assert.strictEqual(toolCategoryOf("meeting-cost-calculator"), "time");
+        assert.strictEqual(toolCategoryOf("video-revenue-calculator"), "creator");
+        assert.strictEqual(toolCategoryOf("fan-growth-calculator"), "creator");
+        assert.strictEqual(toolCategoryOf("engagement-rate-calculator"), "creator");
     });
     it("只识别已发布的工具路径", () => {
-        assert.strictEqual((TOOL_SLUGS).length, 23);
-        assert.strictEqual(new Set(TOOL_SLUGS).size, 23);
+        assert.strictEqual((TOOL_SLUGS).length, 35);
+        assert.strictEqual(new Set(TOOL_SLUGS).size, 35);
         assert.strictEqual(isToolSlug("nrr-calculator"), true);
         assert.strictEqual(isToolSlug("mrr-calculator"), true);
         assert.strictEqual(isToolSlug("freelance-income-calculator"), true);
@@ -443,5 +455,125 @@ describe("免费工具计算", () => {
         assert.ok(Math.abs((capped.ceiling) - (10000)) < 0.5 * 10 ** -(2));
         assert.strictEqual(capped.monthsToTarget, null);
         assert.strictEqual(mrrGoal({ currentMrr: 5000, newMrr: 0, churnPercent: 5, months: 1, targetMrr: 4000 }).monthsToTarget, 0);
+    });
+    it("贷款月供：等额本息月供与总利息，零利率时平摊本金", () => {
+        const result = loanPayment({ principal: 300000, annualRatePercent: 4, months: 240 });
+        assert.ok(Math.abs(result.monthlyPayment - 1817.94) < 0.01);
+        assert.ok(Math.abs(result.totalRepaid - 436305.84) < 0.01);
+        assert.ok(Math.abs(result.totalInterest - 136305.84) < 0.01);
+        const zero = loanPayment({ principal: 12000, annualRatePercent: 0, months: 12 });
+        assert.strictEqual(zero.monthlyPayment, 1000);
+        assert.strictEqual(zero.totalInterest, 0);
+        assert.deepStrictEqual(loanPayment({ principal: 300000, annualRatePercent: 4, months: 0 }), { monthlyPayment: 0, totalRepaid: 0, totalInterest: 0 });
+        assert.ok(Math.abs(loanPayment({ principal: 100000, annualRatePercent: -5, months: 12 }).monthlyPayment - 100000 / 12) < 1e-9);
+    });
+    it("存款复利：按月复利叠加定存，利息等于到期金额减累计本金", () => {
+        const result = compoundSavings({ initial: 10000, monthlyAdd: 2000, annualRatePercent: 2.5, months: 36 });
+        assert.ok(Math.abs(result.futureValue - 85466.06) < 0.01);
+        assert.strictEqual(result.contributions, 82000);
+        assert.ok(Math.abs(result.interest - 3466.06) < 0.01);
+        const zeroRate = compoundSavings({ initial: 100, monthlyAdd: 10, annualRatePercent: 0, months: 5 });
+        assert.strictEqual(zeroRate.futureValue, 150);
+        assert.strictEqual(compoundSavings({ initial: 0, monthlyAdd: 0, annualRatePercent: 3, months: 12 }).futureValue, 0);
+    });
+    it("BMI：按中国标准划分范围并给出健康体重区间，身高为 0 时无法计算", () => {
+        const result = bmi({ heightCm: 170, weightKg: 65 });
+        assert.ok(Math.abs(result.bmi - 22.49) < 0.01);
+        assert.strictEqual(result.categoryIndex, 1);
+        assert.ok(Math.abs(result.healthyWeightMin - 53.465) < 0.001);
+        assert.ok(Math.abs(result.healthyWeightMax - 69.36) < 0.001);
+        assert.strictEqual(bmi({ heightCm: 0, weightKg: 65 }).categoryIndex, null);
+        assert.strictEqual(bmi({ heightCm: 170, weightKg: 80 }).categoryIndex, 2);
+        assert.strictEqual(bmi({ heightCm: 170, weightKg: 95 }).categoryIndex, 3);
+        assert.strictEqual(bmi({ heightCm: 160, weightKg: 45 }).categoryIndex, 0);
+    });
+    it("每日卡路里：按性别修正基础代谢，活动水平折算总消耗", () => {
+        const male = dailyCalorie({ sex: "male", age: 30, heightCm: 170, weightKg: 65, activityFactor: 1.375 });
+        assert.strictEqual(male.bmr, 1567.5);
+        assert.ok(Math.abs(male.tdee - 2155.3125) < 0.001);
+        const female = dailyCalorie({ sex: "female", age: 30, heightCm: 170, weightKg: 65, activityFactor: 1 });
+        assert.strictEqual(female.bmr, 1567.5 - 166);
+        assert.strictEqual(female.tdee, female.bmr);
+    });
+    it("日期间隔：不包含开始当天，工作日与周末分别统计，无效日期标记为不可用", () => {
+        const result = dateDifference({ from: "2025-01-01", to: "2025-03-01" });
+        assert.strictEqual(result.valid, true);
+        assert.strictEqual(result.days, 59);
+        assert.strictEqual(result.wholeWeeks, 8);
+        assert.strictEqual(result.remainingDays, 3);
+        assert.strictEqual(result.businessDays, 42);
+        assert.strictEqual(result.weekendDays, 17);
+        const reversed = dateDifference({ from: "2025-03-01", to: "2025-01-01" });
+        assert.strictEqual(reversed.days, -59);
+        assert.strictEqual(reversed.valid, true);
+        assert.strictEqual(dateDifference({ from: "2025-02-31", to: "2025-03-01" }).valid, false);
+        assert.strictEqual(dateDifference({ from: "", to: "" }).days, null);
+    });
+    it("加班费：按 1.5、2、3 倍三档累计", () => {
+        const result = overtimePay({ hourlyWage: 100, weekdayHours: 10, weekendHours: 8, holidayHours: 4 });
+        assert.strictEqual(result.weekdayPay, 1500);
+        assert.strictEqual(result.weekendPay, 1600);
+        assert.strictEqual(result.holidayPay, 1200);
+        assert.strictEqual(result.totalPay, 4300);
+        assert.strictEqual(result.totalHours, 22);
+        assert.strictEqual(overtimePay({ hourlyWage: 100, weekdayHours: 0, weekendHours: 0, holidayHours: 0 }).totalPay, 0);
+    });
+    it("会议成本：每场、每月、全年按人均时薪累计", () => {
+        const result = meetingCost({ attendees: 6, hourlySalary: 80, minutes: 60, timesPerMonth: 8 });
+        assert.strictEqual(result.perMeeting, 480);
+        assert.strictEqual(result.monthly, 3840);
+        assert.strictEqual(result.annual, 46080);
+        assert.strictEqual(result.personHours, 6);
+        assert.strictEqual(meetingCost({ attendees: 3, hourlySalary: 100, minutes: 90, timesPerMonth: 0 }).monthly, 0);
+    });
+    it("视频收益：千次播放收益按分成比例折算，单条到月度到年度", () => {
+        const result = videoRevenue({ views: 50000, rpm: 20, sharePercent: 100, videosPerMonth: 8 });
+        assert.strictEqual(result.perVideo, 1000);
+        assert.strictEqual(result.monthly, 8000);
+        assert.strictEqual(result.annual, 96000);
+        assert.strictEqual(result.perTenThousandViews, 200);
+        const shared = videoRevenue({ views: 50000, rpm: 20, sharePercent: 50, videosPerMonth: 0 });
+        assert.strictEqual(shared.perVideo, 500);
+        assert.strictEqual(shared.monthly, 0);
+        assert.strictEqual(videoRevenue({ views: 0, rpm: 0, sharePercent: 100, videosPerMonth: 2 }).perVideo, 0);
+    });
+    it("互动率：总互动量除以粉丝数，换算每千粉互动量", () => {
+        const result = engagementRate({ followers: 10000, likes: 800, comments: 120, shares: 60 });
+        assert.strictEqual(result.interactions, 980);
+        assert.strictEqual(result.rate, 9.8);
+        assert.strictEqual(result.perThousandFollowers, 98);
+        assert.strictEqual(engagementRate({ followers: 0, likes: 10, comments: 5, shares: 1 }).rate, 0);
+    });
+    it("粉丝增长：与邮件列表同一模型，掉粉率决定增长上限", () => {
+        const result = fanGrowth({ followers: 1000, gainedPerMonth: 100, unfollowPercent: 10, months: 2, targetFans: 1000 });
+        assert.ok(Math.abs(result.projected - 1000) < 0.5 * 10 ** -(2));
+        assert.ok(Math.abs(result.ceiling - 1000) < 0.5 * 10 ** -(2));
+        assert.strictEqual(result.monthsToTarget, 0);
+        const steady = fanGrowth({ followers: 0, gainedPerMonth: 100, unfollowPercent: 0, months: 999, targetFans: 250 });
+        assert.strictEqual(steady.projected, 6000);
+        assert.strictEqual(steady.monthsToTarget, 3);
+    });
+    it("现金流预测：逐月累计现金并找出最低点，耗尽月份仅报告第一次", () => {
+        const result = cashflowProjection({ cash: 20000, monthlyRevenue: 3000, revenueGrowthPercent: 5, monthlyExpenses: 4000, expenseGrowthPercent: 2, months: 12 });
+        assert.strictEqual(result.points.length, 12);
+        assert.ok(Math.abs(result.endCash - 14103.02) < 0.01);
+        assert.ok(Math.abs(result.lowPoint - 13934.79) < 0.01);
+        assert.strictEqual(result.exhaustedMonth, null);
+    });
+    it("现金流预测：收入覆盖不了支出时报告首次耗尽月份", () => {
+        const wiped = cashflowProjection({ cash: 1000, monthlyRevenue: 100, revenueGrowthPercent: -50, monthlyExpenses: 2000, expenseGrowthPercent: 0, months: 12 });
+        assert.strictEqual(wiped.exhaustedMonth, 1);
+        assert.ok(wiped.lowPoint < 0);
+        assert.strictEqual(cashflowProjection({ cash: 0, monthlyRevenue: 0, revenueGrowthPercent: 0, monthlyExpenses: 0, expenseGrowthPercent: 0, months: 5 }).endCash, 0);
+    });
+    it("增长率换算：按复利折算年化与月度，并给出倍增时间", () => {
+        const result = growthRateConvert({ percent: 5, periodsPerYear: 12 });
+        assert.ok(Math.abs(result.annual - 79.59) < 0.01);
+        assert.ok(Math.abs(result.monthly - 5) < 1e-6);
+        assert.ok(Math.abs(result.doublingMonths - 14.21) < 0.01);
+        const weekly = growthRateConvert({ percent: 1, periodsPerYear: 52 });
+        assert.ok(Math.abs(weekly.annual - 67.77) < 0.01);
+        assert.strictEqual(growthRateConvert({ percent: 0, periodsPerYear: 12 }).doublingMonths, null);
+        assert.strictEqual(growthRateConvert({ percent: -10, periodsPerYear: 12 }).doublingMonths, null);
     });
 });

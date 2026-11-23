@@ -22,6 +22,18 @@ export const TOOL_SLUGS = [
     "lifetime-vs-subscription-calculator",
     "affiliate-commission-calculator",
     "mrr-goal-calculator",
+    "loan-payment-calculator",
+    "compound-savings-calculator",
+    "bmi-calculator",
+    "daily-calorie-calculator",
+    "date-difference-calculator",
+    "overtime-pay-calculator",
+    "meeting-cost-calculator",
+    "video-revenue-calculator",
+    "fan-growth-calculator",
+    "engagement-rate-calculator",
+    "cashflow-projection-calculator",
+    "growth-rate-calculator",
 ];
 export const TOOL_CATEGORIES = [
     {
@@ -30,11 +42,23 @@ export const TOOL_CATEGORIES = [
     },
     {
         id: "growth",
-        slugs: ["ltv-cac-calculator", "churn-rate-calculator", "nrr-calculator", "referral-loop-calculator", "conversion-rate-calculator", "revenue-goal-calculator", "ad-roas-calculator", "email-list-growth-calculator", "affiliate-commission-calculator", "mrr-goal-calculator"],
+        slugs: ["ltv-cac-calculator", "churn-rate-calculator", "nrr-calculator", "referral-loop-calculator", "conversion-rate-calculator", "revenue-goal-calculator", "ad-roas-calculator", "email-list-growth-calculator", "affiliate-commission-calculator", "mrr-goal-calculator", "growth-rate-calculator"],
     },
     {
         id: "planning",
-        slugs: ["freelance-income-calculator", "runway-calculator", "tax-reserve-calculator", "ai-api-cost-calculator", "subscription-cost-calculator", "outsource-vs-diy-calculator"],
+        slugs: ["freelance-income-calculator", "runway-calculator", "tax-reserve-calculator", "ai-api-cost-calculator", "subscription-cost-calculator", "outsource-vs-diy-calculator", "cashflow-projection-calculator"],
+    },
+    {
+        id: "life",
+        slugs: ["loan-payment-calculator", "compound-savings-calculator", "bmi-calculator", "daily-calorie-calculator"],
+    },
+    {
+        id: "time",
+        slugs: ["date-difference-calculator", "overtime-pay-calculator", "meeting-cost-calculator"],
+    },
+    {
+        id: "creator",
+        slugs: ["video-revenue-calculator", "fan-growth-calculator", "engagement-rate-calculator"],
     },
 ];
 export function toolCategoryOf(slug) {
@@ -384,6 +408,15 @@ export function mrrGoal(input) {
         target: input.targetMrr,
     });
 }
+export function fanGrowth(input) {
+    return growthWithLosses({
+        start: input.followers,
+        added: input.gainedPerMonth,
+        lossPercent: input.unfollowPercent,
+        months: input.months,
+        target: input.targetFans,
+    });
+}
 export function lifetimeVsSubscription(input) {
     const churn = Math.min(100, Math.max(0, input.churnPercent));
     const lifetimeMonths = churn > 0 ? 100 / churn : null;
@@ -425,4 +458,161 @@ export function outsourceVsDiy(input) {
         // Above this value of your own hour, handing the work off costs less than doing it.
         breakEvenValue: freedHours > 0 ? input.quote / freedHours : null,
     };
+}
+export function loanPayment(input) {
+    const months = Math.max(0, Math.floor(input.months));
+    const monthlyRate = input.annualRatePercent / 100 / 12;
+    if (months === 0) return { monthlyPayment: 0, totalRepaid: 0, totalInterest: 0 };
+    if (monthlyRate <= 0) {
+        const payment = input.principal / months;
+        return { monthlyPayment: payment, totalRepaid: input.principal, totalInterest: 0 };
+    }
+    const payment = input.principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -months));
+    const totalRepaid = payment * months;
+    return { monthlyPayment: payment, totalRepaid, totalInterest: totalRepaid - input.principal };
+}
+export function compoundSavings(input) {
+    const months = Math.min(MAX_PROJECTION_MONTHS * 12, Math.max(0, Math.floor(input.months)));
+    const monthlyRate = input.annualRatePercent / 100 / 12;
+    const contributions = input.initial + input.monthlyAdd * months;
+    let value = input.initial;
+    for (let month = 1; month <= months; month += 1)
+        value = value * (1 + monthlyRate) + input.monthlyAdd;
+    return { futureValue: value, contributions, interest: value - contributions };
+}
+export function bmi(input) {
+    const meters = input.heightCm / 100;
+    if (meters <= 0) {
+        return { bmi: 0, categoryIndex: null, healthyWeightMin: null, healthyWeightMax: null };
+    }
+    const square = meters * meters;
+    const bmiValue = input.weightKg / square;
+    // 中国成人标准：<18.5 偏瘦，18.5–24 正常，24–28 超重，≥28 肥胖。
+    const categoryIndex = bmiValue < 18.5 ? 0 : bmiValue < 24 ? 1 : bmiValue < 28 ? 2 : 3;
+    return {
+        bmi: bmiValue,
+        categoryIndex,
+        healthyWeightMin: 18.5 * square,
+        healthyWeightMax: 24 * square,
+    };
+}
+export function basalMetabolicRate(input) {
+    const base = 10 * input.weightKg + 6.25 * input.heightCm - 5 * input.age;
+    // Mifflin-St Jeor 公式按生理性别加一个常数项。
+    const sexAdjustment = input.sex === "female" ? -161 : 5;
+    return Math.max(0, base + sexAdjustment);
+}
+export function dailyCalorie(input) {
+    const bmr = basalMetabolicRate(input);
+    return { bmr, tdee: bmr * input.activityFactor };
+}
+const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
+function parseIsoDate(value) {
+    const match = DATE_PATTERN.exec(String(value).trim());
+    if (!match) return null;
+    const [, year, month, day] = match.map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    // Reject rollovers like 2025-02-31 that Date.UTC silently accepts.
+    if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+    return date;
+}
+export function dateDifference(input) {
+    const from = parseIsoDate(input.from);
+    const to = parseIsoDate(input.to);
+    if (from === null || to === null) {
+        return { valid: false, days: null, wholeWeeks: null, remainingDays: null, businessDays: null, weekendDays: null };
+    }
+    const dayMs = 24 * 60 * 60 * 1000;
+    const totalDays = Math.round((to.getTime() - from.getTime()) / dayMs);
+    const fromUtc = new Date(from.getTime());
+    let businessDays = 0;
+    let weekendDays = 0;
+    const sign = totalDays >= 0 ? 1 : -1;
+    // Count each day in between, excluding both endpoints by convention.
+    for (let day = 1; day <= Math.abs(totalDays); day += 1) {
+        fromUtc.setUTCDate(fromUtc.getUTCDate() + sign);
+        const weekday = fromUtc.getUTCDay();
+        if (weekday === 0 || weekday === 6) weekendDays += 1;
+        else businessDays += 1;
+    }
+    const absoluteDays = Math.abs(totalDays);
+    const direction = totalDays < 0 ? -1 : 1;
+    return {
+        valid: true,
+        days: totalDays,
+        wholeWeeks: Math.floor(absoluteDays / 7) * (totalDays < 0 ? -1 : 1),
+        remainingDays: (absoluteDays % 7) * (totalDays < 0 ? -1 : 1),
+        businessDays: businessDays * direction,
+        weekendDays: weekendDays * direction,
+    };
+}
+export function overtimePay(input) {
+    const hourPay = input.hourlyWage;
+    const weekday = hourPay * input.weekdayHours * 1.5;
+    const weekend = hourPay * input.weekendHours * 2;
+    const holiday = hourPay * input.holidayHours * 3;
+    return {
+        weekdayPay: weekday,
+        weekendPay: weekend,
+        holidayPay: holiday,
+        totalPay: weekday + weekend + holiday,
+        totalHours: input.weekdayHours + input.weekendHours + input.holidayHours,
+    };
+}
+export function meetingCost(input) {
+    const hours = Math.max(0, input.minutes) / 60;
+    const perMeeting = attendees => attendees * input.hourlySalary * hours;
+    const perMeetingCost = perMeeting(input.attendees);
+    const personHours = input.attendees * hours;
+    return {
+        perMeeting: perMeetingCost,
+        monthly: perMeetingCost * input.timesPerMonth,
+        annual: perMeetingCost * input.timesPerMonth * 12,
+        personHours,
+    };
+}
+export function videoRevenue(input) {
+    const revenuePerVideo = input.views / 1000 * input.rpm * input.sharePercent / 100;
+    return {
+        perVideo: revenuePerVideo,
+        monthly: revenuePerVideo * input.videosPerMonth,
+        annual: revenuePerVideo * input.videosPerMonth * 12,
+        perTenThousandViews: input.views > 0 ? revenuePerVideo * (10000 / input.views) : 0,
+    };
+}
+export function engagementRate(input) {
+    const interactions = input.likes + input.comments + input.shares;
+    return {
+        interactions,
+        rate: input.followers > 0 ? interactions / input.followers * 100 : 0,
+        // Interactions that 1 000 followers produce at the same speed.
+        perThousandFollowers: input.followers > 0 ? interactions / input.followers * 1000 : 0,
+    };
+}
+export function cashflowProjection(input) {
+    const months = Math.min(MAX_PROJECTION_MONTHS, Math.max(1, Math.floor(input.months)));
+    const revenueGrowth = 1 + input.revenueGrowthPercent / 100;
+    const expenseGrowth = 1 + input.expenseGrowthPercent / 100;
+    const points = [];
+    let cash = input.cash;
+    let revenue = input.monthlyRevenue;
+    let expenses = input.monthlyExpenses;
+    let lowPoint = cash;
+    let exhaustedMonth = null;
+    for (let month = 1; month <= months; month += 1) {
+        cash += revenue - expenses;
+        points.push({ month, revenue, expenses, endCash: cash });
+        if (cash < lowPoint) lowPoint = cash;
+        if (cash < 0 && exhaustedMonth === null) exhaustedMonth = month;
+        revenue *= revenueGrowth;
+        expenses *= expenseGrowth;
+    }
+    return { points, endCash: cash, lowPoint, exhaustedMonth };
+}
+export function growthRateConvert(input) {
+    const periods = Math.max(1, input.periodsPerYear);
+    const factor = 1 + input.percent / 100;
+    const annual = (Math.pow(factor, periods) - 1) * 100;
+    const monthly = (Math.pow(factor, periods / 12) - 1) * 100;
+    return { annual, monthly, doublingMonths: input.percent > 0 ? Math.log(2) / (Math.log(factor) * periods / 12) : null };
 }

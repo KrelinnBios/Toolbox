@@ -1,11 +1,11 @@
-import { TOOL_SLUGS, TOOL_CATEGORIES, TOOL_CURRENCIES, isToolCurrency, toolCategoryOf, tieredPricing, subscriptionCosts } from "./calculations.js?v=202611041";
-import { toolsCopyZh as baseText } from "./calculator-copy.js?v=202611042";
+import { TOOL_SLUGS, TOOL_CATEGORIES, TOOL_CURRENCIES, isToolCurrency, toolCategoryOf, tieredPricing, subscriptionCosts } from "./calculations.js?v=202611231";
+import { toolsCopyZh as baseText } from "./calculator-copy.js?v=202611231";
 import { escapeHtml, field, resultRow } from "./calculator-ui.js?v=202610241";
 
 const slug = new URLSearchParams(location.search).get("tool");
 const isTool = TOOL_SLUGS.includes(slug);
 // 工具目录无需加载计算器视图；仅详情页下载并初始化。
-const views = isTool ? await import("./calculator-views.js?v=202611042") : null;
+const views = isTool ? await import("./calculator-views.js?v=202611231") : null;
 
 const calculators = isTool ? {
   "pricing-profit-calculator": views.ProfitCalculator,
@@ -29,11 +29,26 @@ const calculators = isTool ? {
   "mrr-goal-calculator": views.MrrGoalCalculator,
   "tiered-pricing-calculator": renderTiers,
   "subscription-cost-calculator": renderSubscriptions,
+  "loan-payment-calculator": views.LoanPaymentCalculator,
+  "compound-savings-calculator": views.CompoundSavingsCalculator,
+  "bmi-calculator": views.BmiCalculator,
+  "daily-calorie-calculator": views.DailyCalorieCalculator,
+  "date-difference-calculator": views.DateDifferenceCalculator,
+  "overtime-pay-calculator": views.OvertimePayCalculator,
+  "meeting-cost-calculator": views.MeetingCostCalculator,
+  "video-revenue-calculator": views.VideoRevenueCalculator,
+  "fan-growth-calculator": views.FanGrowthCalculator,
+  "engagement-rate-calculator": views.EngagementRateCalculator,
+  "cashflow-projection-calculator": views.CashflowProjectionCalculator,
+  "growth-rate-calculator": views.GrowthRateCalculator,
 } : {};
 const CATEGORY_TAGS = {
   revenue: "定价",
   growth: "增长",
   planning: "规划",
+  life: "生活",
+  time: "时间",
+  creator: "创作",
 };
 const scenarios = isTool ? {
   "pricing-adjustment-calculator": [

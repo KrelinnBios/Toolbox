@@ -45,6 +45,9 @@
 .tools-section.category-revenue { --card-shadow: var(--blue); --card-active: #e3e8ff; }
 .tools-section.category-growth { --card-shadow: var(--green); --card-active: #def3e6; }
 .tools-section.category-planning { --card-shadow: var(--orange); --card-active: #fff0dc; }
+.tools-section.category-life { --card-shadow: #8abf45; --card-active: #eaf6d8; }
+.tools-section.category-time { --card-shadow: #f1c40f; --card-active: #fff5c9; }
+.tools-section.category-creator { --card-shadow: #e84393; --card-active: #ffe0f0; }
 .calculator-category { margin: 32px 0 12px; color: var(--blue); font-weight: 700; }
 #calculator-detail h1 { margin: 0; font: 900 clamp(28px, 3vw, 44px)/1.35 "Noto Sans SC", sans-serif; }
 .tool-card { margin-top: 28px; padding: 28px; border: 2px solid var(--ink); background: var(--surface); box-shadow: 6px 6px 0 var(--ink); }

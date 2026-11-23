@@ -1,4 +1,4 @@
-import { adRoas, affiliateCommission, annualPricing, lifetimeVsSubscription, mrrGoal, aiApiCost, emailListGrowth, outsourceVsDiy, refundChargeback, sponsorshipCpm, pricingProfit, projectQuote, revenueGoal, churnStats, conversionRate, discountImpact, freelanceRate, hourlyToSalary, ltvCac, mrrProjection, netRevenueRetention, priceIncrease, referralLoop, runway, taxReserve } from './calculations.js?v=202611041';
+import { adRoas, affiliateCommission, annualPricing, lifetimeVsSubscription, mrrGoal, aiApiCost, emailListGrowth, outsourceVsDiy, refundChargeback, sponsorshipCpm, pricingProfit, projectQuote, revenueGoal, churnStats, conversionRate, discountImpact, freelanceRate, hourlyToSalary, ltvCac, mrrProjection, netRevenueRetention, priceIncrease, referralLoop, runway, taxReserve, loanPayment, compoundSavings, bmi, dailyCalorie, dateDifference, overtimePay, meetingCost, videoRevenue, fanGrowth, engagementRate, cashflowProjection, growthRateConvert } from './calculations.js?v=202611231';
 import { escapeHtml, field, resultRow } from './calculator-ui.js?v=202610241';
 export function toNumber(value) {
     const parsed = Number(value);
@@ -580,4 +580,290 @@ export function RevenueGoalCalculator({ locale, text, currency, values }) {
       ${resultRow({ label: text.results.targetVisitors, value: count(result.visitors) })}
       ${resultRow({ label: text.results.dailyVisitors, value: count(result.dailyVisitors) })} </dl>
 <p class="tool-note">${escapeHtml(text.workflow.goalNote)}</p>` };
+}
+function selectField({ id, name, label, value, options }) {
+    return `<label class="tool-field" for="${escapeHtml(id)}"><span>${escapeHtml(label)}</span>
+    <select id="${escapeHtml(id)}" name="${escapeHtml(name)}">${options.map((option) => `<option value="${escapeHtml(option.value)}"${option.value === value ? " selected" : ""}>${escapeHtml(option.label)}</option>`).join("")}</select>
+  </label>`;
+}
+function isoDatePlusDays(days) {
+    const date = new Date();
+    date.setUTCDate(date.getUTCDate() + days);
+    return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`;
+}
+export function LoanPaymentCalculator({ locale, text, currency, values }) {
+    const principal = values.principal ?? "300000";
+    const rate = values.rate ?? "4";
+    const months = values.months ?? "240";
+    const format = formatters(locale, currency);
+    const result = loanPayment({
+        principal: toNumber(principal),
+        annualRatePercent: toNumber(rate),
+        months: toNumber(months),
+    });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "loan-principal", label: text.labels.loanPrincipal, value: principal, name: "principal" })}
+      ${field({ id: "loan-rate", label: text.labels.loanAnnualRate, value: rate, name: "rate" })}
+      ${field({ id: "loan-months", label: text.labels.loanMonths, value: months, step: "1", name: "months" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.loanMonthly, value: format.money(result.monthlyPayment), strong: true })}
+      ${resultRow({ label: text.results.loanTotalPaid, value: format.money(result.totalRepaid) })}
+      ${resultRow({ label: text.results.loanTotalInterest, value: format.money(result.totalInterest) })} </dl>
+<p class="tool-note">${escapeHtml(text.results.loanNote)}</p>` };
+}
+export function CompoundSavingsCalculator({ locale, text, currency, values }) {
+    const initial = values.initial ?? "10000";
+    const add = values.add ?? "2000";
+    const rate = values.rate ?? "2.5";
+    const months = values.months ?? "36";
+    const format = formatters(locale, currency);
+    const result = compoundSavings({
+        initial: toNumber(initial),
+        monthlyAdd: toNumber(add),
+        annualRatePercent: toNumber(rate),
+        months: toNumber(months),
+    });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "savings-initial", label: text.labels.savingsInitial, value: initial, name: "initial" })}
+      ${field({ id: "savings-add", label: text.labels.savingsMonthlyAdd, value: add, name: "add" })}
+      ${field({ id: "savings-rate", label: text.labels.savingsAnnualRate, value: rate, name: "rate" })}
+      ${field({ id: "savings-months", label: text.labels.savingsMonths, value: months, step: "1", name: "months" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.savingsFutureValue, value: format.money(result.futureValue), strong: true })}
+      ${resultRow({ label: text.results.savingsContributions, value: format.money(result.contributions) })}
+      ${resultRow({ label: text.results.savingsInterest, value: format.money(result.interest) })} </dl>
+<p class="tool-note">${escapeHtml(text.results.savingsNote)}</p>` };
+}
+export function BmiCalculator({ locale, text, currency, values }) {
+    const height = values.height ?? "170";
+    const weight = values.weight ?? "65";
+    const format = formatters(locale, currency);
+    const result = bmi({ heightCm: toNumber(height), weightKg: toNumber(weight) });
+    const categories = [text.results.bmiLowWeight, text.results.bmiNormalWeight, text.results.bmiOverWeight, text.results.bmiObese];
+    const summary = result.categoryIndex === null ? text.results.notAvailable : categories[result.categoryIndex];
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "bmi-height", label: text.labels.heightCm, value: height, name: "height" })}
+      ${field({ id: "bmi-weight", label: text.labels.weightKg, value: weight, name: "weight" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.bmiValue, value: result.categoryIndex === null ? text.results.notAvailable : format.ratio(result.bmi), strong: true })}
+      ${resultRow({ label: text.results.bmiCategory, value: summary })}
+      ${resultRow({ label: text.results.bmiHealthyRange, value: result.categoryIndex === null ? text.results.notAvailable : `${format.number(result.healthyWeightMin)} – ${format.number(result.healthyWeightMax)} kg` })} </dl>
+<p class="tool-note">${escapeHtml(text.results.bmiNote)}</p>` };
+}
+export function DailyCalorieCalculator({ locale, text, currency, values }) {
+    const sex = values.sex === "female" ? "female" : "male";
+    const age = values.age ?? "30";
+    const height = values.height ?? "170";
+    const weight = values.weight ?? "65";
+    const activities = [
+        { value: "1.2", label: text.workflow.activityLow },
+        { value: "1.375", label: text.workflow.activityLight },
+        { value: "1.55", label: text.workflow.activityModerate },
+        { value: "1.725", label: text.workflow.activityHigh },
+        { value: "1.9", label: text.workflow.activityAthlete },
+    ];
+    const activity = activities.some((option) => option.value === values.activity) ? values.activity : "1.375";
+    const valid = toNumber(age) > 0 && toNumber(height) > 0 && toNumber(weight) > 0;
+    const result = dailyCalorie({
+        sex,
+        age: toNumber(age),
+        heightCm: toNumber(height),
+        weightKg: toNumber(weight),
+        activityFactor: toNumber(activity),
+    });
+    const format = formatters(locale, currency);
+    const energy = (value) => valid ? `${format.number(value)} kcal` : text.results.notAvailable;
+    return { inputs: `<div class="tool-inputs">
+      ${selectField({ id: "calorie-sex", name: "sex", label: text.labels.sex, value: sex, options: [{ value: "male", label: text.workflow.sexMale }, { value: "female", label: text.workflow.sexFemale }] })}
+      ${field({ id: "calorie-age", label: text.labels.age, value: age, step: "1", name: "age" })}
+      ${field({ id: "calorie-height", label: text.labels.heightCm, value: height, name: "height" })}
+      ${field({ id: "calorie-weight", label: text.labels.weightKg, value: weight, name: "weight" })}
+      ${selectField({ id: "calorie-activity", name: "activity", label: text.labels.activity, value: activity, options: activities })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.bmr, value: energy(result.bmr) })}
+      ${resultRow({ label: text.results.tdee, value: energy(result.tdee), strong: true })} </dl>
+<p class="tool-note">${escapeHtml(text.results.calorieNote)}</p>`;
+}
+export function DateDifferenceCalculator({ locale, text, currency, values }) {
+    // 首次进入带今天与 30 天后的默认值；用户清空某项时显示提示。
+    const from = values.from === undefined ? isoDatePlusDays(0) : values.from;
+    const to = values.to === undefined ? isoDatePlusDays(30) : values.to;
+    const format = formatters(locale, currency);
+    const result = dateDifference({ from, to });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "date-from", label: text.labels.dateFrom, value: from, type: "date", name: "from" })}
+      ${field({ id: "date-to", label: text.labels.dateTo, value: to, type: "date", name: "to" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.days, value: result.valid ? format.number(result.days) : text.results.notAvailable, strong: true })}
+      ${resultRow({ label: text.results.wholeWeeks, value: result.valid ? `${format.number(result.wholeWeeks)} + ${format.number(result.remainingDays)}` : text.results.notAvailable })}
+      ${resultRow({ label: text.results.businessDays, value: result.valid ? format.number(Math.abs(result.businessDays)) : text.results.notAvailable })}
+      ${resultRow({ label: text.results.weekendDaysCount, value: result.valid ? format.number(Math.abs(result.weekendDays)) : text.results.notAvailable })} </dl>
+${(result.valid ? "" : `<p class="tool-warning" role="status">${escapeHtml(text.results.dateInvalid)}</p>`)}
+<p class="tool-note">${escapeHtml(text.results.dateTip)}</p>` };
+}
+export function OvertimePayCalculator({ locale, text, currency, values }) {
+    const wage = values.wage ?? "50";
+    const weekday = values.weekday ?? "10";
+    const weekend = values.weekend ?? "8";
+    const holiday = values.holiday ?? "0";
+    const format = formatters(locale, currency);
+    const result = overtimePay({
+        hourlyWage: toNumber(wage),
+        weekdayHours: toNumber(weekday),
+        weekendHours: toNumber(weekend),
+        holidayHours: toNumber(holiday),
+    });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "hourly-wage", label: text.labels.hourlyWage, value: wage, name: "wage" })}
+      ${field({ id: "weekday-hours", label: text.labels.weekdayHours, value: weekday, name: "weekday" })}
+      ${field({ id: "weekend-hours", label: text.labels.weekendHours, value: weekend, name: "weekend" })}
+      ${field({ id: "holiday-hours", label: text.labels.holidayHours, value: holiday, name: "holiday" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.overtimeWeekdayPay, value: format.money(result.weekdayPay) })}
+      ${resultRow({ label: text.results.overtimeWeekendPay, value: format.money(result.weekendPay) })}
+      ${resultRow({ label: text.results.overtimeHolidayPay, value: format.money(result.holidayPay) })}
+      ${resultRow({ label: text.results.overtimeTotalHours, value: format.number(result.totalHours) })}
+      ${resultRow({ label: text.results.overtimeTotalPay, value: format.money(result.totalPay), strong: true })} </dl>
+<p class="tool-note">${escapeHtml(text.results.overtimeNote)}</p>` };
+}
+export function MeetingCostCalculator({ locale, text, currency, values }) {
+    const attendees = values.attendees ?? "6";
+    const salary = values.salary ?? "80";
+    const minutes = values.minutes ?? "60";
+    const times = values.times ?? "8";
+    const format = formatters(locale, currency);
+    const result = meetingCost({
+        attendees: toNumber(attendees),
+        hourlySalary: toNumber(salary),
+        minutes: toNumber(minutes),
+        timesPerMonth: toNumber(times),
+    });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "attendees", label: text.labels.attendees, value: attendees, step: "1", name: "attendees" })}
+      ${field({ id: "avg-hourly-salary", label: text.labels.avgHourlySalary, value: salary, name: "salary" })}
+      ${field({ id: "meeting-minutes", label: text.labels.meetingMinutes, value: minutes, name: "minutes" })}
+      ${field({ id: "meetings-per-month", label: text.labels.meetingsPerMonth, value: times, step: "1", name: "times" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.meetingPerMeeting, value: format.money(result.perMeeting), strong: true })}
+      ${resultRow({ label: text.results.meetingMonthly, value: format.money(result.monthly) })}
+      ${resultRow({ label: text.results.meetingAnnual, value: format.money(result.annual) })}
+      ${resultRow({ label: text.results.meetingPersonHours, value: format.number(result.personHours) })} </dl>
+<p class="tool-note">${escapeHtml(text.results.meetingNote)}</p>` };
+}
+export function VideoRevenueCalculator({ locale, text, currency, values }) {
+    const views = values.views ?? "50000";
+    const rpm = values.rpm ?? "20";
+    const share = values.share ?? "100";
+    const videos = values.videos ?? "8";
+    const format = formatters(locale, currency);
+    const result = videoRevenue({
+        views: toNumber(views),
+        rpm: toNumber(rpm),
+        sharePercent: toNumber(share),
+        videosPerMonth: toNumber(videos),
+    });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "video-views", label: text.labels.videoViews, value: views, step: "1", name: "views" })}
+      ${field({ id: "video-rpm", label: text.labels.videoRpm, value: rpm, name: "rpm" })}
+      ${field({ id: "video-share", label: text.labels.platformShare, value: share, max: 100, name: "share" })}
+      ${field({ id: "videos-per-month", label: text.labels.videosPerMonth, value: videos, step: "1", name: "videos" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.videoPerVideo, value: format.money(result.perVideo), strong: true })}
+      ${resultRow({ label: text.results.videoMonthly, value: format.money(result.monthly) })}
+      ${resultRow({ label: text.results.videoAnnual, value: format.money(result.annual) })}
+      ${resultRow({ label: text.results.videoPerTenThousand, value: format.money(result.perTenThousandViews) })} </dl>
+<p class="tool-note">${escapeHtml(text.results.videoNote)}</p>` };
+}
+export function FanGrowthCalculator({ locale, text, currency, values }) {
+    const followers = values.followers ?? "5000";
+    const gained = values.gained ?? "300";
+    const unfollow = values.unfollow ?? "2";
+    const months = values.months ?? "12";
+    const target = values.target ?? "20000";
+    const format = formatters(locale, currency);
+    const result = fanGrowth({
+        followers: toNumber(followers),
+        gainedPerMonth: toNumber(gained),
+        unfollowPercent: toNumber(unfollow),
+        months: toNumber(months),
+        targetFans: toNumber(target),
+    });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "fan-followers", label: text.labels.followers, value: followers, step: "1", name: "followers" })}
+      ${field({ id: "fan-gained", label: text.labels.gainedPerMonth, value: gained, step: "1", name: "gained" })}
+      ${field({ id: "fan-unfollow", label: text.labels.unfollowPercent, value: unfollow, max: 100, name: "unfollow" })}
+      ${field({ id: "fan-months", label: text.labels.months, value: months, step: "1", name: "months" })}
+      ${field({ id: "fan-target", label: text.labels.targetFans, value: target, step: "1", name: "target" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.projectedFans, value: format.number(Math.round(result.projected)), strong: true })}
+      ${resultRow({ label: text.results.netAdded, value: format.number(Math.round(result.netAdded)) })}
+      ${resultRow({ label: text.results.fanCeiling, value: result.ceiling === null ? text.results.notAvailable : format.number(Math.round(result.ceiling)) })}
+      ${resultRow({ label: text.results.monthsToTarget, value: result.monthsToTarget === null ? text.results.notAvailable : `${format.number(result.monthsToTarget)} ${text.results.monthsUnit}` })} </dl>
+<p class="tool-note" role="status">${escapeHtml(text.results.fanNote)}</p>` };
+}
+export function EngagementRateCalculator({ locale, text, currency, values }) {
+    const followers = values.followers ?? "10000";
+    const likes = values.likes ?? "800";
+    const comments = values.comments ?? "120";
+    const shares = values.shares ?? "60";
+    const format = formatters(locale, currency);
+    const result = engagementRate({
+        followers: toNumber(followers),
+        likes: toNumber(likes),
+        comments: toNumber(comments),
+        shares: toNumber(shares),
+    });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "engagement-followers", label: text.labels.followers, value: followers, step: "1", name: "followers" })}
+      ${field({ id: "engagement-likes", label: text.labels.likeCount, value: likes, step: "1", name: "likes" })}
+      ${field({ id: "engagement-comments", label: text.labels.commentCount, value: comments, step: "1", name: "comments" })}
+      ${field({ id: "engagement-shares", label: text.labels.shareCount, value: shares, step: "1", name: "shares" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.totalInteractions, value: format.number(result.interactions) })}
+      ${resultRow({ label: text.results.engagementRateResult, value: format.percent(result.rate), strong: true })}
+      ${resultRow({ label: text.results.interactionsPerThousand, value: format.number(result.perThousandFollowers) })} </dl>
+<p class="tool-note">${escapeHtml(text.results.engagementNote)}</p>` };
+}
+export function CashflowProjectionCalculator({ locale, text, currency, values }) {
+    const cash = values.cash ?? "20000";
+    const revenue = values.revenue ?? "3000";
+    const revenueGrowth = values.revenueGrowth ?? "5";
+    const expenses = values.expenses ?? "4000";
+    const expenseGrowth = values.expenseGrowth ?? "2";
+    const months = values.months ?? "12";
+    const format = formatters(locale, currency);
+    const result = cashflowProjection({
+        cash: toNumber(cash),
+        monthlyRevenue: toNumber(revenue),
+        revenueGrowthPercent: toNumber(revenueGrowth),
+        monthlyExpenses: toNumber(expenses),
+        expenseGrowthPercent: toNumber(expenseGrowth),
+        months: toNumber(months),
+    });
+    const count = (value) => value === null ? text.results.notAvailable : format.number(value);
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "cash-balance", label: text.labels.cashBalance, value: cash, name: "cash" })}
+      ${field({ id: "cashflow-revenue", label: text.labels.cashflowRevenue, value: revenue, name: "revenue" })}
+      ${field({ id: "revenue-growth", label: text.labels.revenueGrowthPercent, value: revenueGrowth, name: "revenueGrowth" })}
+      ${field({ id: "cashflow-expenses", label: text.labels.cashflowExpenses, value: expenses, name: "expenses" })}
+      ${field({ id: "expense-growth", label: text.labels.expenseGrowthPercent, value: expenseGrowth, name: "expenseGrowth" })}
+      ${field({ id: "cashflow-months", label: text.labels.months, value: months, step: "1", max: "60", name: "months" })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.cashflowEnd, value: format.money(result.endCash), strong: true })}
+      ${resultRow({ label: text.results.cashflowLowPoint, value: format.money(result.lowPoint) })}
+      ${resultRow({ label: text.results.cashflowExhausted, value: result.exhaustedMonth === null ? text.results.cashflowNeverExhausted : `${text.results.month} ${result.exhaustedMonth}` })} </dl>
+<div class="tool-table-wrap"><table class="tool-table"><thead><tr>
+        ${[text.results.month, text.results.cashflowRevenue.replace(/（.*）/, ""), text.results.cashflowExpenses.replace(/（.*）/, ""), text.results.cashflowEnd].map((label) => `<th scope="col">${escapeHtml(label)}</th>`).join("")}
+      </tr></thead><tbody>${result.points.map((point) => `<tr><td>${escapeHtml(point.month)}</td><td>${escapeHtml(format.money(point.revenue))}</td><td>${escapeHtml(format.money(point.expenses))}</td><td>${escapeHtml(format.money(point.endCash))}</td></tr>`).join("")}</tbody></table></div>
+<p class="tool-note">${escapeHtml(text.results.cashflowNote)}</p>` };
+}
+export function GrowthRateCalculator({ locale, text, currency, values }) {
+    const percent = values.percent ?? "5";
+    const periods = values.periods ?? "12";
+    const periodOptions = [
+        { value: "365", label: text.workflow.dailyPeriods },
+        { value: "52", label: text.workflow.weeklyPeriods },
+        { value: "12", label: text.workflow.monthlyPeriods },
+        { value: "4", label: text.workflow.quarterlyPeriods },
+        { value: "1", label: text.workflow.yearlyPeriods },
+    ];
+    const chosen = periodOptions.some((option) => option.value === periods) ? periods : "12";
+    const format = formatters(locale, currency);
+    const result = growthRateConvert({ percent: toNumber(percent), periodsPerYear: toNumber(chosen) });
+    return { inputs: `<div class="tool-inputs">
+      ${field({ id: "growth-percent", label: text.labels.growthPercent, value: percent, name: "percent" })}
+      ${selectField({ id: "growth-periods", name: "periods", label: text.labels.periodsPerYear, value: chosen, options: periodOptions })} </div>`, output: `<dl class="tool-results" aria-live="polite">
+      ${resultRow({ label: text.results.annualizedRate, value: format.percent(result.annual), strong: true })}
+      ${resultRow({ label: text.results.monthlyEquivalentRate, value: format.percent(result.monthly) })}
+      ${resultRow({ label: text.results.doublingTime, value: result.doublingMonths === null ? text.results.notAvailable : `${format.number(result.doublingMonths)} ${text.results.monthsUnit}` })} </dl>
+<p class="tool-note">${escapeHtml(text.results.growthRateNote)}</p>` };
 }
