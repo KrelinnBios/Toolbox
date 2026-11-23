@@ -160,12 +160,15 @@ function setActiveTab(nextTab) {
   }
   if (!activeTab) return;
   if (window.matchMedia("(max-width: 800px)").matches) {
-    // 只滚动横向目录，避免 scrollIntoView 打断页面正在进行的平滑滚动。
+    // 滚动联动换分类时，横向目录条自己跟随移动，
+    // 让激活按钮始终滚到可视区中央，不需要手动横滑查找。
+    // 仍只通过 scrollBy 滚动横向目录，避免 scrollIntoView 打断页面正在进行的平滑滚动。
     const bounds = toolsTabs.getBoundingClientRect();
     const tabBounds = activeTab.getBoundingClientRect();
-    const offset = tabBounds.left < bounds.left ? tabBounds.left - bounds.left
-      : tabBounds.right > bounds.right ? tabBounds.right - bounds.right : 0;
-    if (offset) toolsTabs.scrollBy({ left: offset, behavior: scrollBehavior() });
+    const centerOffset = (tabBounds.left + tabBounds.right - bounds.left - bounds.right) / 2;
+    if (Math.abs(centerOffset) >= 1) {
+      toolsTabs.scrollBy({ left: centerOffset, behavior: scrollBehavior() });
+    }
   } else {
     activeTab.scrollIntoView({ block: "nearest", inline: "nearest", behavior: scrollBehavior() });
   }

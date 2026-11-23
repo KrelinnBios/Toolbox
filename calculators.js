@@ -94,12 +94,29 @@ directory.innerHTML = TOOL_CATEGORIES.map(category => `
 function setActiveCategory(category) {
   if (activeCategory === category) return;
   activeCategory = category;
+  let activeLink = null;
   directory.querySelectorAll("[data-category]").forEach(link => {
     const isActive = link.dataset.category === category;
     link.classList.toggle("is-active", isActive);
-    if (isActive) link.setAttribute("aria-current", "location");
-    else link.removeAttribute("aria-current");
+    if (isActive) {
+      link.setAttribute("aria-current", "location");
+      activeLink = link;
+    } else {
+      link.removeAttribute("aria-current");
+    }
   });
+  // 滚动联动换分类时，横向目录条自己跟随移动，
+  // 让激活按钮滚到可视区中央，而不是留在屏幕外需要手动横滑。
+  // 只通过 scrollBy 滚动横向目录，避免 scrollIntoView 打断页面正在进行的平滑滚动。
+  if (activeLink && window.matchMedia("(max-width: 800px)").matches && typeof directory.scrollBy === "function") {
+    const bounds = directory.getBoundingClientRect();
+    const tabBounds = activeLink.getBoundingClientRect();
+    const centerOffset = (tabBounds.left + tabBounds.right - bounds.left - bounds.right) / 2;
+    if (Math.abs(centerOffset) >= 1) {
+      const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+      directory.scrollBy({ left: centerOffset, behavior });
+    }
+  }
 }
 
 function updateActiveCategoryFromScroll() {
